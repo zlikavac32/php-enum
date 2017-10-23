@@ -1,0 +1,29 @@
+{
+    "name": "zlikavac32/php-enum",
+    "description": "Better PHP enum support",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Marijan Šuflaj",
+            "email": "msufflaj32@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=7.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Zlikavac32\\Enum\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Zlikavac32\\Enum\\Tests\\": "tests/"
+        }
+    }
+}

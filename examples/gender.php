@@ -1,0 +1,57 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Zlikavac32\Rick\Examples;
+
+use Zlikavac32\Enum\Enum;
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+/**
+ * @method static Gender MALE
+ * @method static Gender FEMALE
+ */
+abstract class Gender extends Enum
+{
+    /**
+     * @var string
+     */
+    private $symbol;
+
+    public function __construct(string $symbol)
+    {
+        $this->symbol = $symbol;
+    }
+
+    protected static function createEnumerationObjects(): array
+    {
+        return [
+            'MALE'   => new class('M') extends Gender
+            {
+            },
+            'FEMALE' => new class('F') extends Gender
+            {
+            },
+        ];
+    }
+
+    public function symbol(): string
+    {
+        return $this->symbol;
+    }
+}
+
+function dumpGender(Gender $gender)
+{
+    var_dump($gender->symbol());
+}
+
+var_dump(
+    Gender::FEMALE()
+        ->symbol()
+);
+var_dump(Gender::MALE() === Gender::FEMALE());
+var_dump(Gender::MALE() === Gender::MALE());
+
+dumpGender(Gender::MALE());
