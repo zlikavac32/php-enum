@@ -8,22 +8,41 @@ use ArrayIterator;
 use InvalidArgumentException;
 use Iterator;
 use LogicException;
+use Serializable;
+use Throwable;
 
-abstract class Enum
+abstract class Enum implements Serializable
 {
+    /**
+     * @var Enum[][]
+     */
     private static $existingEnums = [];
 
-    private $ordinal = -1;
+    /**
+     * @var int
+     */
+    private $ordinal;
 
-    private $name = '';
+    /**
+     * @var string
+     */
+    private $name;
 
     final public function ordinal(): int
     {
+        if (null === $this->ordinal) {
+            throw new LogicException('You can not retrieve ordinal within enumerate()');
+        }
+
         return $this->ordinal;
     }
 
     final public function name(): string
     {
+        if (null === $this->name) {
+            throw new LogicException('You can not retrieve name within enumerate()');
+        }
+
         return $this->name;
     }
 
@@ -32,9 +51,39 @@ abstract class Enum
         throw new LogicException('Cloning enum object is not allowed');
     }
 
-    public function __toString()
+    final public function __set_state()
     {
-        return $this->name;
+        throw $this->createNoSerializeUnserializeException();
+    }
+
+    final public function __wakeup()
+    {
+        throw $this->createNoSerializeUnserializeException();
+    }
+
+    final public function __sleep()
+    {
+        throw $this->createNoSerializeUnserializeException();
+    }
+
+    final public function serialize()
+    {
+        throw $this->createNoSerializeUnserializeException();
+    }
+
+    final public function unserialize($serialized): object
+    {
+        throw $this->createNoSerializeUnserializeException();
+    }
+
+    private function createNoSerializeUnserializeException(): Throwable
+    {
+        return new LogicException('Serialization/deserialization of enum object is not allowed');
+    }
+
+    public function __toString(): string
+    {
+        return $this->name();
     }
 
     /**
@@ -45,7 +94,7 @@ abstract class Enum
         return new ArrayIterator(array_values(self::retrieveCurrentContextEnumerations()));
     }
 
-    public static function __callStatic($name, $arguments)
+    final public static function __callStatic($name, $arguments)
     {
         if (count($arguments) > 0) {
             throw new InvalidArgumentException(
@@ -60,6 +109,16 @@ abstract class Enum
         }
 
         return $objects[$name];
+    }
+
+    protected static function enumerate(): array
+    {
+        throw new LogicException(
+            sprintf(
+                'You must provide protected static function enumerate(): array method in your enum class %s',
+                static::class
+            )
+        );
     }
 
     /**
@@ -78,18 +137,24 @@ abstract class Enum
 
     private static function discoverEnumerationObjects()
     {
-        /* @var Enum[] $objects */
-        $objects = static::createEnumerationObjects();
+        /* @var Enum[]|string[] $objectsOrEnumNames */
+        $objectsOrEnumNames = static::enumerate();
 
-        if (count($objects) === 0) {
+        if (count($objectsOrEnumNames) === 0) {
             throw new LogicException(sprintf('Enumeration objects array in class %s can not be empty', static::class));
+        }
+
+        if (self::collectionRepresentsSimpleEnumeration($objectsOrEnumNames)) {
+            $objects = self::createDynamicEnumObjects($objectsOrEnumNames);
+        } else {
+            self::assertValidEnumCollection($objectsOrEnumNames);
+
+            $objects = $objectsOrEnumNames;
         }
 
         $i = 0;
 
         foreach ($objects as $alias => $object) {
-            self::assertValidAlias($alias);
-            self::assertValidEnumObject($object);
             $object->ordinal = $i++;
             $object->name = $alias;
         }
@@ -97,29 +162,58 @@ abstract class Enum
         return $objects;
     }
 
-    protected static function createEnumerationObjects(): array
+    private static function collectionRepresentsSimpleEnumeration(array $objectsOrEnumNames): bool
     {
-        throw new LogicException(
-            sprintf(
-                'You must provide protected static function createEnumerationObjects(): array method in your enum class %s',
-                static::class
-            )
-        );
+        reset($objectsOrEnumNames);
+        $key = key($objectsOrEnumNames);
+
+        return is_int($key);
     }
 
-    private static function assertValidAlias($alias): void
+    private static function assertValidEnumCollection(array $enumCollection): void
     {
-        if (!is_string($alias)) {
-            throw new LogicException(sprintf('Alias %d in enum class %s is not valid alias', $alias, static::class));
+        foreach ($enumCollection as $alias => $object) {
+            self::assertValidStringAlias($alias);
+            self::assertValidEnumObject($object);
+        }
+    }
+
+    private static function createDynamicEnumObjects(array $enumNames): array
+    {
+        $evalString = sprintf('return new class extends %s {};', static::class);
+        $objects = [];
+        //We don't care about the indexes whether they are strings or are they out of order
+        //That may change in the future though
+        foreach ($enumNames as $enumName) {
+            self::assertValidStringAlias($enumName);
+            //eval is in a controlled environment but I'm glad that you're careful
+            $objects[$enumName] = eval($evalString);
         }
 
-        //For now we allow anything else although in the future some name patterns may arise
+        return $objects;
+    }
+
+    private static function assertValidStringAlias($alias): void
+    {
+        if (is_string($alias)) {
+            //For now we allow anything else although in the future some name patterns may arise
+            return;
+        }
+
+        if (is_object($alias)) {
+            $formattedAlias = sprintf('(object instance of %s)', get_class($alias));
+        } else {
+            $formattedAlias = $alias;
+        }
+        throw new LogicException(
+            sprintf('Alias %s in enum class %s is not valid alias', $formattedAlias, static::class)
+        );
     }
 
     private static function assertValidEnumObject($object): void
     {
         if ($object instanceof static) {
-            return ;
+            return;
         }
 
         if (is_object($object)) {

@@ -16,7 +16,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
  */
 abstract class MathematicalOperator extends Enum
 {
-    protected static function createEnumerationObjects(): array
+    protected static function enumerate(): array
     {
         return [
             'PLUS'  => new class extends MathematicalOperator

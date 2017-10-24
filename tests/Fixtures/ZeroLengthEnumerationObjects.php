@@ -8,7 +8,7 @@ use Zlikavac32\Enum\Enum;
 
 abstract class ZeroLengthEnumerationObjects extends Enum
 {
-    protected static function createEnumerationObjects(): array
+    protected static function enumerate(): array
     {
         return [];
     }

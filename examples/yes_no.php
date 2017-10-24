@@ -14,15 +14,10 @@ require_once __DIR__ . '/../vendor/autoload.php';
  */
 abstract class YesNo extends Enum
 {
-    protected static function createEnumerationObjects(): array
+    protected static function enumerate(): array
     {
         return [
-            'YES' => new class extends YesNo
-            {
-            },
-            'NO'  => new class extends YesNo
-            {
-            },
+            'YES', 'NO'
         ];
     }
 }
@@ -39,6 +34,12 @@ function yesNo(YesNo $yesNo)
     }
 }
 
+var_dump(YesNo::YES() === YesNo::NO());
+var_dump(YesNo::YES() == YesNo::NO());
+
+var_dump(YesNo::YES() === YesNo::YES());
+var_dump(YesNo::YES() == YesNo::YES());
+
 yesNo(YesNo::NO());
 yesNo(YesNo::YES());
 
@@ -48,3 +49,4 @@ var_dump(
     YesNo::YES()
         ->ordinal()
 );
+

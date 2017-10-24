@@ -7,9 +7,13 @@ namespace Zlikavac32\Enum\Tests;
 use LogicException;
 use PHPUnit\Framework\TestCase;
 use Zlikavac32\Enum\Tests\Fixtures\DefaultCreateEnumerationObjects;
-use Zlikavac32\Enum\Tests\Fixtures\InvalidAliasEnumerationObjects;
+use Zlikavac32\Enum\Tests\Fixtures\InvalidNumberAliasEnumerationObjects;
+use Zlikavac32\Enum\Tests\Fixtures\InvalidObjectAliasEnumerationObjects;
+use Zlikavac32\Enum\Tests\Fixtures\NameWithinEnumerateEnum;
 use Zlikavac32\Enum\Tests\Fixtures\NonObjectEnumerationObjects;
-use Zlikavac32\Enum\Tests\Fixtures\ValidEnum;
+use Zlikavac32\Enum\Tests\Fixtures\OrdinalWithinEnumerateEnum;
+use Zlikavac32\Enum\Tests\Fixtures\ValidObjectsEnum;
+use Zlikavac32\Enum\Tests\Fixtures\ValidStringEnum;
 use Zlikavac32\Enum\Tests\Fixtures\WrongClassEnumerationObjects;
 use Zlikavac32\Enum\Tests\Fixtures\ZeroLengthEnumerationObjects;
 
@@ -20,26 +24,44 @@ class EnumTest extends TestCase
     {
         $this->assertSame(
             0,
-            ValidEnum::ENUM_A()
+            ValidObjectsEnum::ENUM_A()
                 ->ordinal()
         );
         $this->assertSame(
             1,
-            ValidEnum::ENUM_B()
+            ValidObjectsEnum::ENUM_B()
                 ->ordinal()
         );
+    }
+
+    /**
+     * @expectedException LogicException
+     * @expectedExceptionMessage You can not retrieve ordinal within enumerate()
+     */
+    public function testThatOrdinalThrowExceptionUntilValueIsDefined(): void
+    {
+        OrdinalWithinEnumerateEnum::ENUM_A();
+    }
+
+    /**
+     * @expectedException LogicException
+     * @expectedExceptionMessage You can not retrieve name within enumerate()
+     */
+    public function testThatNameThrowExceptionUntilValueIsDefined(): void
+    {
+        NameWithinEnumerateEnum::ENUM_A();
     }
 
     public function testThatEnumObjectsHaveValidName(): void
     {
         $this->assertSame(
             'ENUM_A',
-            ValidEnum::ENUM_A()
+            ValidObjectsEnum::ENUM_A()
                 ->name()
         );
         $this->assertSame(
             'ENUM_B',
-            ValidEnum::ENUM_B()
+            ValidObjectsEnum::ENUM_B()
                 ->name()
         );
     }
@@ -50,34 +72,45 @@ class EnumTest extends TestCase
      */
     public function testThatCloneIsNotSupported(): void
     {
-        clone ValidEnum::ENUM_A();
+        clone ValidObjectsEnum::ENUM_A();
     }
 
     public function testThatEnumObjectsHaveValidDefaultToStringImplementation(): void
     {
-        $this->assertSame('ENUM_A', (string) ValidEnum::ENUM_A());
-        $this->assertSame('ENUM_B', (string) ValidEnum::ENUM_B());
+        $this->assertSame('ENUM_A', (string) ValidObjectsEnum::ENUM_A());
+        $this->assertSame('ENUM_B', (string) ValidObjectsEnum::ENUM_B());
     }
 
     public function testThatIteratorIteratesOverEnumObjects(): void
     {
         $this->assertSame(
             [
-                ValidEnum::ENUM_A(),
-                ValidEnum::ENUM_B(),
+                ValidObjectsEnum::ENUM_A(),
+                ValidObjectsEnum::ENUM_B(),
             ],
-            iterator_to_array(ValidEnum::iterator())
+            iterator_to_array(ValidObjectsEnum::iterator())
+        );
+    }
+
+    public function testThatIteratorIteratesOverStringEnumObjects(): void
+    {
+        $this->assertSame(
+            [
+                ValidStringEnum::ENUM_A(),
+                ValidStringEnum::ENUM_B(),
+            ],
+            iterator_to_array(ValidStringEnum::iterator())
         );
     }
 
     /**
      * @expectedException LogicException
      * @expectedExceptionMessage No argument must be provided when calling
-     *     Zlikavac32\Enum\Tests\Fixtures\ValidEnum::ENUM_B
+     *     Zlikavac32\Enum\Tests\Fixtures\ValidObjectsEnum::ENUM_B
      */
     public function testThatEnumObjectCallsMustBeWithoutArguments(): void
     {
-        ValidEnum::ENUM_B(0);
+        ValidObjectsEnum::ENUM_B(0);
     }
 
     /**
@@ -92,7 +125,7 @@ class EnumTest extends TestCase
 
     /**
      * @expectedException LogicException
-     * @expectedExceptionMessage You must provide protected static function createEnumerationObjects(): array method in
+     * @expectedExceptionMessage You must provide protected static function enumerate(): array method in
      *     your enum class Zlikavac32\Enum\Tests\Fixtures\DefaultCreateEnumerationObjects
      */
     public function testThatDefaultEnumerationObjectConfigurationThrowsException(): void
@@ -102,21 +135,32 @@ class EnumTest extends TestCase
 
     /**
      * @expectedException LogicException
-     * @expectedExceptionMessage Enum object I_DONT_EXIST missing in Zlikavac32\Enum\Tests\Fixtures\ValidEnum
+     * @expectedExceptionMessage Enum object I_DONT_EXIST missing in Zlikavac32\Enum\Tests\Fixtures\ValidObjectsEnum
      */
     public function testThatAccessingNonExistingEnumThrowsException(): void
     {
-        ValidEnum::I_DONT_EXIST();
+        ValidObjectsEnum::I_DONT_EXIST();
     }
 
     /**
      * @expectedException LogicException
-     * @expectedExceptionMessage Alias 0 in enum class Zlikavac32\Enum\Tests\Fixtures\InvalidAliasEnumerationObjects is
-     *     not valid alias
+     * @expectedExceptionMessage Alias 0 in enum class
+     *     Zlikavac32\Enum\Tests\Fixtures\InvalidObjectAliasEnumerationObjects is not valid alias
      */
-    public function testThatInvalidAliasThrowsException(): void
+    public function testThatInvalidObjectAliasThrowsException(): void
     {
-        InvalidAliasEnumerationObjects::iterator();
+        InvalidObjectAliasEnumerationObjects::iterator();
+    }
+
+    /**
+     * @expectedException LogicException
+     * @expectedExceptionMessage Alias (object instance of
+     *     Zlikavac32\Enum\Tests\Fixtures\InvalidNumberAliasEnumerationObjectsDummy) in enum class
+     *     Zlikavac32\Enum\Tests\Fixtures\InvalidNumberAliasEnumerationObjects is not valid alias
+     */
+    public function testThatInvalidNumberAliasThrowsException(): void
+    {
+        InvalidNumberAliasEnumerationObjects::iterator();
     }
 
     /**
@@ -137,5 +181,50 @@ class EnumTest extends TestCase
     public function testThatObjectEnumThrowsException(): void
     {
         NonObjectEnumerationObjects::iterator();
+    }
+
+    /**
+     * @expectedException LogicException
+     * @expectedExceptionMessage Serialization/deserialization of enum object is not allowed
+     */
+    public function testThatSetStateThrowsException(): void
+    {
+        ValidStringEnum::ENUM_A()->__set_state();
+    }
+
+    /**
+     * @expectedException LogicException
+     * @expectedExceptionMessage Serialization/deserialization of enum object is not allowed
+     */
+    public function testThatSleepThrowsException(): void
+    {
+        ValidStringEnum::ENUM_A()->__sleep();
+    }
+
+    /**
+     * @expectedException LogicException
+     * @expectedExceptionMessage Serialization/deserialization of enum object is not allowed
+     */
+    public function testThatWakeupThrowsException(): void
+    {
+        ValidStringEnum::ENUM_A()->__wakeup();
+    }
+
+    /**
+     * @expectedException LogicException
+     * @expectedExceptionMessage Serialization/deserialization of enum object is not allowed
+     */
+    public function testThatSerializeThrowsException(): void
+    {
+        ValidStringEnum::ENUM_A()->serialize();
+    }
+
+    /**
+     * @expectedException LogicException
+     * @expectedExceptionMessage Serialization/deserialization of enum object is not allowed
+     */
+    public function testThatUnserializeThrowsException(): void
+    {
+        ValidStringEnum::ENUM_A()->unserialize('');
     }
 }

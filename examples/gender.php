@@ -24,7 +24,7 @@ abstract class Gender extends Enum
         $this->symbol = $symbol;
     }
 
-    protected static function createEnumerationObjects(): array
+    protected static function enumerate(): array
     {
         return [
             'MALE'   => new class('M') extends Gender

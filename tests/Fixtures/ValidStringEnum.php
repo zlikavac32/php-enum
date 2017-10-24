@@ -6,12 +6,17 @@ namespace Zlikavac32\Enum\Tests\Fixtures;
 
 use Zlikavac32\Enum\Enum;
 
-abstract class NonObjectEnumerationObjects extends Enum
+/**
+ * @method static ValidStringEnum ENUM_A
+ * @method static ValidStringEnum ENUM_B
+ */
+abstract class ValidStringEnum extends Enum
 {
     protected static function enumerate(): array
     {
         return [
-            'ALIAS' => 1
+            'ENUM_A',
+            'ENUM_B',
         ];
     }
 }

@@ -8,26 +8,26 @@ use Zlikavac32\Enum\Enum;
 
 abstract class WrongClassEnumerationObjects extends Enum
 {
-    protected static function createEnumerationObjects(): array
+    protected static function enumerate(): array
     {
         return [
-            'ALIAS' => Dummy::A()
+            'ALIAS' => WrongClassEnumerationObjectsDummy::A()
         ];
     }
 }
 
 /**
- * @method static Dummy A
+ * @method static WrongClassEnumerationObjectsDummy A
  */
-abstract class Dummy extends Enum
+abstract class WrongClassEnumerationObjectsDummy extends Enum
 {
-    protected static function createEnumerationObjects(): array
+    protected static function enumerate(): array
     {
         return [
-            'A' => new ADummy()
+            'A' => new AWrongClassEnumerationObjectsDummy()
         ];
     }
 }
 
 //This exists only to get some portable class name in exception message
-class ADummy extends Dummy {}
+class AWrongClassEnumerationObjectsDummy extends WrongClassEnumerationObjectsDummy {}
