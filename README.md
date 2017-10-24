@@ -6,6 +6,22 @@
 
 This library aims to make your everyday enumeration use in PHP easier.
 
+## Table of contents
+
+1. [What are enums and when to use them?](#what-are-enums-and-when-to-use-them)
+1. [Installation](#installation)
+1. [Features](#features)
+    1. [Type-hinting](#type-hinting)
+    1. [Polymorphism](#polymorphism)
+    1. [Identity check](#identity check)
+1. [Usage](#usage)
+1. [Restrictions](#restrictions)
+    1. [No serialisation](#no-serialisation)
+    1. [No cloning](#no-cloning)
+1. [Limitations](#limitations)
+1. [Examples](#examples)
+1. [Reasoning behind this library](#reasoning-behind-this-library)
+
 ## What are enums and when to use them?
 
 To reference [Wikipedia](http://wikipedia.org/wiki/Enumerated_type):
@@ -29,7 +45,7 @@ Custom enum implementations (emulations) are nothing new in the PHP world since 
 
 ### Type-hinting
 
-You can type-hint your arguments and return values just like with any other class (`function getNextDay(WeekDay $day): Day`). This, sort of (check [Limitations](#Limitations)), guarantees that you'll always get valid enumeration object.
+You can type-hint your arguments and return values just like with any other class (`function getNextDay(WeekDay $day): Day`). This, sort of (check [Limitations](#limitations)), guarantees that you'll always get valid enumeration object.
 
 ### Polymorphism
 
@@ -71,19 +87,19 @@ Every call to the same enum will return that same object so you can safely use i
 
 Since enums are created using static method, it's recommended to type-hint your class with existing static methods using `@method static YourEnumClass YOUR_ENUM_NAME`.
 
-# Restrictions
+## Restrictions
 
 To mitigate wrong usage and sleepless nights in debugging, some restrictions are placed. They exist not because I want them to, but to serve as an early warning that something could go wrong in the long run. If you try really hard, you can still avoid them but then what's the purpose of this library to you?
 
-## No serialisation
+### No serialisation
 
 In order to try to avoid misuse as much as possible, you can not serialize/unserialize enumeration objects. With normal library usage, this preserves identity check which could unintentionally be broken.
 
-## No cloning
+### No cloning
 
 The reasoning behind this is the same as with serialisation.
 
-# Limitations
+## Limitations
 
 As with any emulation, there are some limitations. Main limitation is that this library can not guarantee that every object is one of the valid enum instances. If you try really hard to find an edge case, you'll succeed, but this is not the idea because this can't be fixed in the first place. If a language does not put some restrictions, user land implementations can hardly do that. 
 
@@ -91,11 +107,11 @@ Since you can always extend existing enum, you can send it somewhere where valid
 
 Other limitation is that everything is done during runtime so some static analysis my report issues or some compiler checks may not be performed that would otherwise be performed if PHP had native support. To combat that, you can hint methods in doc-block comments.
 
-# Examples
+## Examples
 
 You can see more examples with code comments in [examples](/examples).
 
-# Reasoning behind this library
+## Reasoning behind this library
 
 I find this way quite intuitive and a good enum direction. You can misuse everything if you want to. This does not mean that you should not use this library. It means that this will make your easier if you use it with these limitations on your mind.
 
