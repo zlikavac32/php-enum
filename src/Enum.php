@@ -87,11 +87,19 @@ abstract class Enum implements Serializable
     }
 
     /**
-     * @return Iterator|Enum[]
+     * @return Iterator|static[] Enum items in order they are defined
      */
-    public static function iterator(): Iterator
+    final public static function iterator(): Iterator
     {
-        return new ArrayIterator(array_values(self::retrieveCurrentContextEnumerations()));
+        return new ArrayIterator(self::values());
+    }
+
+    /**
+     * @return static[] Enum items in order they are defined
+     */
+    final public static function values(): array
+    {
+        return array_values(self::retrieveCurrentContextEnumerations());
     }
 
     /**

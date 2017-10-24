@@ -106,6 +106,17 @@ class EnumTest extends TestCase
         );
     }
 
+    public function testThatValuesCanBeReturned(): void
+    {
+        $this->assertSame(
+            [
+                ValidStringEnum::ENUM_A(),
+                ValidStringEnum::ENUM_B(),
+            ],
+            ValidStringEnum::values()
+        );
+    }
+
     public function testThatIteratorIteratesOverStringEnumObjects(): void
     {
         $this->assertSame(

@@ -96,7 +96,6 @@ var_dump(
 
 //We can iterate over every operator and let him apply its operation. We also override __toString() method
 
-/* @var MathematicalOperator $operator */
 foreach (MathematicalOperator::iterator() as $operator) {
     $left = 10;
     $right = 20;

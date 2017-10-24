@@ -73,7 +73,6 @@ abstract class WorldSide extends Enum
     abstract public function opposite(): WorldSide;
 }
 
-/* @var WorldSide $worldSide */
 foreach (WorldSide::iterator() as $worldSide) {
     var_dump(sprintf('Opposite of %s is %s', (string) $worldSide, (string) $worldSide->opposite()));
 }
