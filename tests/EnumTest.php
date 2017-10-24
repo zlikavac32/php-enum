@@ -75,6 +75,20 @@ class EnumTest extends TestCase
         clone ValidObjectsEnum::ENUM_A();
     }
 
+    public function testThatValueOfReturnsRequestedEnum(): void
+    {
+        $this->assertSame(ValidObjectsEnum::ENUM_A(), ValidObjectsEnum::valueOf('ENUM_A'));
+    }
+
+    /**
+     * @expectedException LogicException
+     * @expectedExceptionMessage Enum object I_DONT_EXIST missing in Zlikavac32\Enum\Tests\Fixtures\ValidObjectsEnum
+     */
+    public function testThatValueOfThrowsExceptionWhenEnumDoesNotExist(): void
+    {
+        ValidObjectsEnum::valueOf('I_DONT_EXIST');
+    }
+
     public function testThatEnumObjectsHaveValidDefaultToStringImplementation(): void
     {
         $this->assertSame('ENUM_A', (string) ValidObjectsEnum::ENUM_A());

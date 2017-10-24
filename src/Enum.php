@@ -94,7 +94,23 @@ abstract class Enum implements Serializable
         return new ArrayIterator(array_values(self::retrieveCurrentContextEnumerations()));
     }
 
-    final public static function __callStatic($name, $arguments)
+    /**
+     * @param string $name
+     *
+     * @return static
+     */
+    public static function valueOf(string $name): Enum
+    {
+        return self::__callStatic($name, []);
+    }
+
+    /**
+     * @param $name
+     * @param $arguments
+     *
+     * @return static
+     */
+    final public static function __callStatic($name, $arguments): Enum
     {
         if (count($arguments) > 0) {
             throw new InvalidArgumentException(
