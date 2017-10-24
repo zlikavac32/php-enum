@@ -121,7 +121,7 @@ abstract class Enum implements Serializable
         $objects = self::retrieveCurrentContextEnumerations();
 
         if (!isset($objects[$name])) {
-            throw new LogicException(sprintf('Enum object %s missing in %s', $name, static::class));
+            throw new EnumNotFoundException($name, static::class);
         }
 
         return $objects[$name];

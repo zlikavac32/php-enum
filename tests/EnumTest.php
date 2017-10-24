@@ -81,7 +81,7 @@ class EnumTest extends TestCase
     }
 
     /**
-     * @expectedException LogicException
+     * @expectedException \Zlikavac32\Enum\EnumNotFoundException
      * @expectedExceptionMessage Enum object I_DONT_EXIST missing in Zlikavac32\Enum\Tests\Fixtures\ValidObjectsEnum
      */
     public function testThatValueOfThrowsExceptionWhenEnumDoesNotExist(): void
@@ -148,7 +148,7 @@ class EnumTest extends TestCase
     }
 
     /**
-     * @expectedException LogicException
+     * @expectedException \Zlikavac32\Enum\EnumNotFoundException
      * @expectedExceptionMessage Enum object I_DONT_EXIST missing in Zlikavac32\Enum\Tests\Fixtures\ValidObjectsEnum
      */
     public function testThatAccessingNonExistingEnumThrowsException(): void
