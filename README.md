@@ -13,7 +13,7 @@ This library aims to make your everyday enumeration use in PHP easier.
 1. [Features](#features)
     1. [Type-hinting](#type-hinting)
     1. [Polymorphism](#polymorphism)
-    1. [Identity check](#identity check)
+    1. [Identity check](#identity-check)
 1. [Usage](#usage)
 1. [Restrictions](#restrictions)
     1. [No serialisation](#no-serialisation)
