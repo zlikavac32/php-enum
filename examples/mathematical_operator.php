@@ -4,9 +4,20 @@ declare(strict_types=1);
 
 namespace Zlikavac32\Rick\Examples;
 
+use LogicException;
 use Zlikavac32\Enum\Enum;
 
 require_once __DIR__ . '/../vendor/autoload.php';
+
+/**
+ * Main benefit of this enum concept is chance to use polymorphism. It's possible to define enum class with abstract
+ * methods or with a constructor. Let's explore this example with some mathematical operators that should have
+ * polymorphic behaviour.
+ *
+ * We will define four enums and we will provide operations for every enum that exists. To achieve that in our named
+ * enum class we define abstract public function apply(float $left, float $right): float; method and then implement in
+ * each anonymous class the required behaviour
+ */
 
 /**
  * @method static MathematicalOperator PLUS
@@ -26,7 +37,7 @@ abstract class MathematicalOperator extends Enum
                     return $left + $right;
                 }
 
-                public function __toString()
+                public function __toString(): string
                 {
                     return '+';
                 }
@@ -38,7 +49,7 @@ abstract class MathematicalOperator extends Enum
                     return $left - $right;
                 }
 
-                public function __toString()
+                public function __toString(): string
                 {
                     return '-';
                 }
@@ -50,7 +61,7 @@ abstract class MathematicalOperator extends Enum
                     return $left * $right;
                 }
 
-                public function __toString()
+                public function __toString(): string
                 {
                     return '*';
                 }
@@ -66,7 +77,7 @@ abstract class MathematicalOperator extends Enum
                     return $left / $right;
                 }
 
-                public function __toString()
+                public function __toString(): string
                 {
                     return '/';
                 }
@@ -77,10 +88,13 @@ abstract class MathematicalOperator extends Enum
     abstract public function apply(float $left, float $right): float;
 }
 
+//Let PLUS enum apply its operation
 var_dump(
     MathematicalOperator::PLUS()
         ->apply(10, 20)
 );
+
+//We can iterate over every operator and let him apply its operation. We also override __toString() method
 
 /* @var MathematicalOperator $operator */
 foreach (MathematicalOperator::iterator() as $operator) {

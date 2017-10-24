@@ -9,6 +9,11 @@ use Zlikavac32\Enum\Enum;
 require_once __DIR__ . '/../vendor/autoload.php';
 
 /**
+ * More advanced example where you define common constructor and behaviour for every enum. Then enum objects are
+ * created with different arguments
+ */
+
+/**
  * @method static Gender MALE
  * @method static Gender FEMALE
  */
@@ -26,6 +31,7 @@ abstract class Gender extends Enum
 
     protected static function enumerate(): array
     {
+        //Create enums with different constructor arguments
         return [
             'MALE'   => new class('M') extends Gender
             {
