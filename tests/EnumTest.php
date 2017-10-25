@@ -10,6 +10,7 @@ use Zlikavac32\Enum\Tests\Fixtures\DefaultCreateEnumerationObjects;
 use Zlikavac32\Enum\Tests\Fixtures\InvalidNumberAliasEnumerationObjects;
 use Zlikavac32\Enum\Tests\Fixtures\InvalidObjectAliasEnumerationObjects;
 use Zlikavac32\Enum\Tests\Fixtures\NameWithinEnumerateEnum;
+use Zlikavac32\Enum\Tests\Fixtures\NonAbstractEnum;
 use Zlikavac32\Enum\Tests\Fixtures\NonObjectEnumerationObjects;
 use Zlikavac32\Enum\Tests\Fixtures\OrdinalWithinEnumerateEnum;
 use Zlikavac32\Enum\Tests\Fixtures\ValidObjectsEnum;
@@ -146,6 +147,15 @@ class EnumTest extends TestCase
     public function testThatZeroLengthEnumerationObjectConfigurationThrowsException(): void
     {
         ZeroLengthEnumerationObjects::iterator();
+    }
+
+    /**
+     * @expectedException LogicException
+     * @expectedExceptionMessage Enum class Zlikavac32\Enum\Tests\Fixtures\NonAbstractEnum must be declared as abstract
+     */
+    public function testThatNonAbstractEnumThrowsException(): void
+    {
+        NonAbstractEnum::ENUM_A();
     }
 
     /**

@@ -79,8 +79,6 @@ abstract class YesNo extends \Zlikavac32\Enum\Enum
 
 Once you have your enum class defined, you can access each defined enum object by calling `YourEnumClass::YOUR_ENUM_NAME()` or in the example above, `YesNo::YES()` and `YesNo::NO()`.
 
-Your class is not required to be abstract, but it's a suggestion to prevent manual enum instantiation.
-
 Other suggestion is to use constant like convention when defining enum name where you use upper-cased letters and underscore as a separator.
 
 Every call to the same enum will return that same object so you can safely use identity operator.

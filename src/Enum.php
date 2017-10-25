@@ -8,6 +8,7 @@ use ArrayIterator;
 use InvalidArgumentException;
 use Iterator;
 use LogicException;
+use ReflectionClass;
 use Serializable;
 use Throwable;
 
@@ -161,6 +162,8 @@ abstract class Enum implements Serializable
 
     private static function discoverEnumerationObjects()
     {
+        self::assertEnumClassIsAbstract(static::class);
+
         /* @var Enum[]|string[] $objectsOrEnumNames */
         $objectsOrEnumNames = static::enumerate();
 
@@ -184,6 +187,15 @@ abstract class Enum implements Serializable
         }
 
         return $objects;
+    }
+
+    private static function assertEnumClassIsAbstract(string $fqn): void
+    {
+        if ((new ReflectionClass($fqn))->isAbstract()) {
+            return ;
+        }
+
+        throw new LogicException(sprintf('Enum class %s must be declared as abstract', $fqn));
     }
 
     private static function collectionRepresentsSimpleEnumeration(array $objectsOrEnumNames): bool
