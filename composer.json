@@ -1,6 +1,7 @@
 {
     "name": "zlikavac32/php-enum",
     "description": "Better PHP enum support",
+    "keywords": ["enum", "php-enum", "enumeration"],
     "type": "library",
     "license": "MIT",
     "authors": [
