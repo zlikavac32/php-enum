@@ -7,6 +7,7 @@ namespace Zlikavac32\Enum\Tests;
 use LogicException;
 use PHPUnit\Framework\TestCase;
 use Zlikavac32\Enum\Tests\Fixtures\DefaultCreateEnumerationObjects;
+use Zlikavac32\Enum\Tests\Fixtures\InvalidAliasNameEnum;
 use Zlikavac32\Enum\Tests\Fixtures\InvalidNumberAliasEnumerationObjects;
 use Zlikavac32\Enum\Tests\Fixtures\InvalidObjectAliasEnumerationObjects;
 use Zlikavac32\Enum\Tests\Fixtures\NameWithinEnumerateEnum;
@@ -156,6 +157,15 @@ class EnumTest extends TestCase
     public function testThatNonAbstractEnumThrowsException(): void
     {
         NonAbstractEnum::ENUM_A();
+    }
+
+    /**
+     * @expectedException LogicException
+     * @expectedExceptionMessage Alias "INVA LID" does not match pattern /^[a-zA-Z_][a-zA-Z_0-9]*$/i
+     */
+    public function testThatInvalidAliasNameThrowsException(): void
+    {
+        InvalidAliasNameEnum::values();
     }
 
     /**

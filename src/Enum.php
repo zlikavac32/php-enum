@@ -232,7 +232,8 @@ abstract class Enum implements Serializable
     private static function assertValidStringAlias($alias): void
     {
         if (is_string($alias)) {
-            //For now we allow anything else although in the future some name patterns may arise
+            self::assertValidAliasPattern($alias);
+
             return;
         }
 
@@ -241,9 +242,21 @@ abstract class Enum implements Serializable
         } else {
             $formattedAlias = $alias;
         }
+
         throw new LogicException(
             sprintf('Alias %s in enum class %s is not valid alias', $formattedAlias, static::class)
         );
+    }
+
+    private static function assertValidAliasPattern(string $alias): void
+    {
+        $pattern = '/^[a-zA-Z_][a-zA-Z_0-9]*$/i';
+
+        if (preg_match($pattern, $alias)) {
+            return ;
+        }
+
+        throw new LogicException(sprintf('Alias "%s" does not match pattern %s', $alias, $pattern));
     }
 
     private static function assertValidEnumObject($object): void
