@@ -14,10 +14,14 @@ This library aims to make your everyday enumeration use in PHP easier.
     1. [Type-hinting](#type-hinting)
     1. [Polymorphism](#polymorphism)
     1. [Identity check](#identity-check)
+1. [API](#api)
+    1. [Class methods](#class-methods)
+    1. [Object methods](#object-methods)
 1. [Usage](#usage)
 1. [Restrictions](#restrictions)
     1. [No serialisation](#no-serialisation)
     1. [No cloning](#no-cloning)
+    1. [Reserved methods](#reserved-methods)
 1. [Limitations](#limitations)
 1. [Examples](#examples)
 1. [Reasoning behind this library](#reasoning-behind-this-library)
@@ -54,6 +58,26 @@ Behind the curtain, every enumeration is an instance of the defined enumeration 
 ### Identity check
 
 Every call to enum object guarantees to return same instance every time it is called. That way you can use `===` to check whether instances are the same or not.
+
+## API
+
+Main class is `\Zlikavac32\Enum\Enum` which serves as base enum (I'd rather have `enum` keywords, but life isn't perfect). You have to extend it and provide `protected static function enumerate(): array` method which will return enumerations. Check the [Usage](#usage) section to see a real example. 
+
+This class also exposes few public static and non static methods which are listed bellow.
+
+### Class methods
+
+- `final valueOf(string $name): static` - returns enum object identified by the name or throws an exception if none is found
+- `final values(): static[]` - returns all of the defined enum objects in order they were defined
+- `iterator(): Iterator<static>` - returns iterator object with all of the defined enum objects in order they were defined
+
+### Object methods
+
+- `__toString(): string` - returns default string representation which is the enum name itself
+- `final name(): string` - returns enum object name
+- `final ordinal(): int` - returns ordinal number of that enum object (it's position in the collection) starting from 0
+
+Other methods serve as a way to restrict inconsistent behaviour, for example, to have to distinct objects of the same enum name. Check the [Restrictions](#restrictions) section for more info. 
 
 ## Usage
 
@@ -96,6 +120,10 @@ In order to try to avoid misuse as much as possible, you can not serialize/unser
 ### No cloning
 
 The reasoning behind this is the same as with serialisation.
+
+### Reserved methods
+
+None of the public methods in `\Zlikavac32\Enum\Enum` can be used as an enum name. Check the [API](#api) section for more details.
 
 ## Limitations
 
