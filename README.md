@@ -138,7 +138,7 @@ Other limitation is that everything is done during runtime so some static analys
 
 ## Rule of thumb
 
-Used correctly, this library should make your life easier and your code more readable and more sense. Only think you should avoid doing is extending your enum class outside of the `enumerate()` method. 
+Used correctly, this library should make your life easier and your code more readable and more sense. Only thing you should avoid doing is extending (and constructing) your enum class outside of the `enumerate()` method. 
 
 Don't make your enums complex. If you need a service for your enum to work, you may not need an enum or that logic does not belong here.
 
