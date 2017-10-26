@@ -129,11 +129,11 @@ abstract class Enum implements Serializable
 
         $objects = self::retrieveCurrentContextEnumerations();
 
-        if (!isset($objects[$name])) {
-            throw new EnumNotFoundException($name, static::class);
+        if (isset($objects[$name])) {
+            return $objects[$name];
         }
 
-        return $objects[$name];
+        throw new EnumNotFoundException($name, static::class);
     }
 
     protected static function enumerate(): array
@@ -153,16 +153,23 @@ abstract class Enum implements Serializable
     {
         $class = static::class;
 
-        if (!isset(self::$existingEnums[$class])) {
-            self::$existingEnums[$class] = self::discoverEnumerationObjects();
-        }
+        self::ensureEnumsAreDiscoveredForClass($class);
 
         return self::$existingEnums[$class];
     }
 
-    private static function discoverEnumerationObjects()
+    private static function ensureEnumsAreDiscoveredForClass(string $class)
     {
-        self::assertEnumClassIsAbstract(static::class);
+        if (isset(self::$existingEnums[$class])) {
+            return ;
+        }
+
+        self::$existingEnums[$class] = self::discoverEnumerationObjectsForClass($class);
+    }
+
+    private static function discoverEnumerationObjectsForClass(string $class)
+    {
+        self::assertEnumClassIsAbstract($class);
 
         /* @var Enum[]|string[] $objectsOrEnumNames */
         $objectsOrEnumNames = static::enumerate();
