@@ -23,6 +23,7 @@ This library aims to make your everyday enumeration use in PHP easier.
     1. [No cloning](#no-cloning)
     1. [Reserved methods](#reserved-methods)
 1. [Limitations](#limitations)
+1. [Rule of thumb](#rule-of-thumb)
 1. [Examples](#examples)
 1. [Reasoning behind this library](#reasoning-behind-this-library)
 
@@ -129,9 +130,21 @@ None of the public methods in `\Zlikavac32\Enum\Enum` can be used as an enum nam
 
 As with any emulation, there are some limitations. Main limitation is that this library can not guarantee that every object is one of the valid enum instances. If you try really hard to find an edge case, you'll succeed, but this is not the idea because this can't be fixed in the first place. If a language does not put some restrictions, user land implementations can hardly do that. 
 
-Since you can always extend existing enum, you can send it somewhere where valid enum is expected. On the other hand, you can never alter existing enums which is one of the goals.
+Since you can always extend existing enum, you can send it somewhere where valid enum is expected and I don't think that for now there is a way to restrict that. Non final class is needed to make enum objects and therefore, no restrictions that can be done. Even if they could, they could be avoided in a same way. 
+
+On the other hand, you can never alter existing enums which is one of the goals. 
 
 Other limitation is that everything is done during runtime so some static analysis my report issues or some compiler checks may not be performed that would otherwise be performed if PHP had native support. To combat that, you can hint methods in doc-block comments.
+
+## Rule of thumb
+
+Used correctly, this library should make your life easier and your code more readable and more sense. Only think you should avoid doing is extending your enum class outside of the `enumerate()` method. 
+
+Don't make your enums complex. If you need a service for your enum to work, you may not need an enum or that logic does not belong here.
+
+This is not a solution to the every problem. If you have a group of items that semantically belong together and have a common "type" like, `Gender` or `WorldSide`, make them an enum. If your items contain arbitrary values that tend to change like `WORKER_WAIT_TIME`, let them be constants. They mean different things.
+
+So to recap, enums carry a meaning with them, constants don't.
 
 ## Examples
 
