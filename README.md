@@ -2,8 +2,6 @@
 
 [![Build Status](https://travis-ci.org/zlikavac32/php-enum.svg?branch=master)](https://travis-ci.org/zlikavac32/php-enum)
 
-**This is currently alpha-to-beta implementation.**
-
 This library aims to make your everyday enumeration use in PHP easier.
 
 ## Table of contents
@@ -38,10 +36,10 @@ That being said, if you want to logically group similar items, use enums and for
 
 ## Installation
 
-Recommended installation is through Composer. This is still alpha-to-beta version so branch `dev-master` is used. That will change in the near future.
+Recommended installation is through Composer.
 
 ```
-composer require zlikavac32/php-enum:dev-master
+composer require zlikavac32/php-enum
 ```
 
 ## Features
