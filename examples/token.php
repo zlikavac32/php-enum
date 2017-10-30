@@ -33,6 +33,7 @@ abstract class Token extends Enum
 
     public function __construct(string $pattern)
     {
+        parent::__construct();
         $this->pattern = $pattern;
     }
 

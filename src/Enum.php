@@ -18,19 +18,65 @@ abstract class Enum implements Serializable
      * @var Enum[][]
      */
     private static $existingEnums = [];
-
+    /**
+     * @var bool[]
+     */
+    private static $enumConstructionContext = [];
     /**
      * @var int
      */
     private $ordinal;
-
     /**
      * @var string
      */
     private $name;
 
+    private $correctlyInitialized = false;
+
+    public function __construct()
+    {
+        $this->assertValidConstructionContext();
+        $this->correctlyInitialized = true;
+    }
+
+    private function assertValidConstructionContext(): bool
+    {
+        $class = get_class($this);
+
+        while ($class) {
+            if (isset(self::$enumConstructionContext[$class])) {
+                return true;
+            }
+
+            $class = get_parent_class($class);
+        }
+
+        throw new LogicException(
+            sprintf(
+                'It seems you tried to manually create enum outside of enumerate() method for enum %s',
+                get_class($this)
+            )
+        );
+    }
+
+    private function assertCorrectlyInitialized(): void
+    {
+        if ($this->correctlyInitialized) {
+            return ;
+        }
+
+        throw new LogicException(
+            sprintf(
+                'It seems that enum is not correctly initialized. Did you forget to call parent::__construct() in enum %s?',
+                get_class($this)
+            )
+        );
+    }
+
     final public function ordinal(): int
     {
+        $this->assertCorrectlyInitialized();
+
         if (null === $this->ordinal) {
             throw new LogicException('You can not retrieve ordinal within enumerate()');
         }
@@ -40,6 +86,8 @@ abstract class Enum implements Serializable
 
     final public function name(): string
     {
+        $this->assertCorrectlyInitialized();
+
         if (null === $this->name) {
             throw new LogicException('You can not retrieve name within enumerate()');
         }
@@ -164,7 +212,13 @@ abstract class Enum implements Serializable
             return ;
         }
 
-        self::$existingEnums[$class] = self::discoverEnumerationObjectsForClass($class);
+        try {
+            self::$enumConstructionContext[$class] = true;
+
+            self::$existingEnums[$class] = self::discoverEnumerationObjectsForClass($class);
+        } finally {
+            unset(self::$enumConstructionContext[$class]);
+        }
     }
 
     private static function discoverEnumerationObjectsForClass(string $class)

@@ -7,9 +7,11 @@ namespace Zlikavac32\Enum\Tests;
 use LogicException;
 use PHPUnit\Framework\TestCase;
 use Zlikavac32\Enum\Tests\Fixtures\DefaultCreateEnumerationObjects;
+use Zlikavac32\Enum\Tests\Fixtures\EnumThatDependsOnEnum;
 use Zlikavac32\Enum\Tests\Fixtures\InvalidAliasNameEnum;
 use Zlikavac32\Enum\Tests\Fixtures\InvalidNumberAliasEnumerationObjects;
 use Zlikavac32\Enum\Tests\Fixtures\InvalidObjectAliasEnumerationObjects;
+use Zlikavac32\Enum\Tests\Fixtures\InvalidOverrideConstructorEnum;
 use Zlikavac32\Enum\Tests\Fixtures\NameWithinEnumerateEnum;
 use Zlikavac32\Enum\Tests\Fixtures\NonAbstractEnum;
 use Zlikavac32\Enum\Tests\Fixtures\NonObjectEnumerationObjects;
@@ -128,6 +130,11 @@ class EnumTest extends TestCase
             ],
             iterator_to_array(ValidStringEnum::iterator())
         );
+    }
+
+    public function testThatDependentEnumCanBeCreated(): void
+    {
+        $this->assertSame(ValidStringEnum::ENUM_A(), EnumThatDependsOnEnum::ENUM_A()->enum());
     }
 
     /**
@@ -271,5 +278,42 @@ class EnumTest extends TestCase
     public function testThatUnserializeThrowsException(): void
     {
         ValidStringEnum::ENUM_A()->unserialize('');
+    }
+
+    /**
+     * @expectedException LogicException
+     * @expectedExceptionMessage It seems that enum is not correctly initialized. Did you forget to call
+     *     parent::__construct() in enum Zlikavac32\Enum\Tests\Fixtures\InvalidOverrideConstructorEnum?
+     */
+    public function testThatConstructMustBeCalled(): void
+    {
+        (new InvalidOverrideConstructorEnum())->name();
+    }
+
+    /**
+     * @expectedException LogicException
+     * @expectedExceptionMessage It seems you tried to manually create enum outside of enumerate() method for enum Zlikavac32\Enum\Tests\Fixtures\NonAbstractEnum
+     */
+    public function testThatNameThrowsExceptionWhenNotConstructedCorrectly(): void
+    {
+        (new NonAbstractEnum())->name();
+    }
+
+    /**
+     * @expectedException LogicException
+     * @expectedExceptionMessage It seems you tried to manually create enum outside of enumerate() method for enum Zlikavac32\Enum\Tests\Fixtures\NonAbstractEnum
+     */
+    public function testThatOrdinalThrowsExceptionWhenNotConstructedCorrectly(): void
+    {
+        (new NonAbstractEnum())->ordinal();
+    }
+
+    /**
+     * @expectedException LogicException
+     * @expectedExceptionMessage It seems you tried to manually create enum outside of enumerate() method for enum Zlikavac32\Enum\Tests\Fixtures\NonAbstractEnum
+     */
+    public function testThatToStringThrowsExceptionWhenNotConstructedCorrectly(): void
+    {
+        (new NonAbstractEnum())->__toString();
     }
 }

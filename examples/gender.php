@@ -26,6 +26,7 @@ abstract class Gender extends Enum
 
     public function __construct(string $symbol)
     {
+        parent::__construct();
         $this->symbol = $symbol;
     }
 
