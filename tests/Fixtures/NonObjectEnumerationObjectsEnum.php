@@ -6,10 +6,12 @@ namespace Zlikavac32\Enum\Tests\Fixtures;
 
 use Zlikavac32\Enum\Enum;
 
-abstract class ZeroLengthEnumerationObjects extends Enum
+abstract class NonObjectEnumerationObjectsEnum extends Enum
 {
     protected static function enumerate(): array
     {
-        return [];
+        return [
+            'ALIAS' => 1
+        ];
     }
 }

@@ -6,21 +6,21 @@ namespace Zlikavac32\Enum\Tests;
 
 use LogicException;
 use PHPUnit\Framework\TestCase;
-use Zlikavac32\Enum\Tests\Fixtures\DefaultCreateEnumerationObjects;
 use Zlikavac32\Enum\Tests\Fixtures\DuplicateNameEnum;
 use Zlikavac32\Enum\Tests\Fixtures\EnumThatDependsOnEnum;
 use Zlikavac32\Enum\Tests\Fixtures\InvalidAliasNameEnum;
-use Zlikavac32\Enum\Tests\Fixtures\InvalidNumberAliasEnumerationObjects;
-use Zlikavac32\Enum\Tests\Fixtures\InvalidObjectAliasEnumerationObjects;
+use Zlikavac32\Enum\Tests\Fixtures\InvalidNumberAliasEnumerationObjectsEnum;
+use Zlikavac32\Enum\Tests\Fixtures\InvalidObjectAliasEnumerationObjectsEnum;
 use Zlikavac32\Enum\Tests\Fixtures\InvalidOverrideConstructorEnum;
 use Zlikavac32\Enum\Tests\Fixtures\NameWithinEnumerateEnum;
+use Zlikavac32\Enum\Tests\Fixtures\NoEnumerateMethodEnum;
 use Zlikavac32\Enum\Tests\Fixtures\NonAbstractEnum;
-use Zlikavac32\Enum\Tests\Fixtures\NonObjectEnumerationObjects;
+use Zlikavac32\Enum\Tests\Fixtures\NonObjectEnumerationObjectsEnum;
 use Zlikavac32\Enum\Tests\Fixtures\OrdinalWithinEnumerateEnum;
 use Zlikavac32\Enum\Tests\Fixtures\ValidObjectsEnum;
 use Zlikavac32\Enum\Tests\Fixtures\ValidStringEnum;
-use Zlikavac32\Enum\Tests\Fixtures\WrongClassEnumerationObjects;
-use Zlikavac32\Enum\Tests\Fixtures\ZeroLengthEnumerationObjects;
+use Zlikavac32\Enum\Tests\Fixtures\WrongClassEnumerationObjectsEnum;
+use Zlikavac32\Enum\Tests\Fixtures\ZeroLengthEnumerationObjectsEnum;
 
 class EnumTest extends TestCase
 {
@@ -155,7 +155,7 @@ class EnumTest extends TestCase
      */
     public function testThatZeroLengthEnumerationObjectConfigurationThrowsException(): void
     {
-        ZeroLengthEnumerationObjects::iterator();
+        ZeroLengthEnumerationObjectsEnum::iterator();
     }
 
     /**
@@ -183,7 +183,7 @@ class EnumTest extends TestCase
      */
     public function testThatDefaultEnumerationObjectConfigurationThrowsException(): void
     {
-        DefaultCreateEnumerationObjects::iterator();
+        NoEnumerateMethodEnum::iterator();
     }
 
     /**
@@ -202,7 +202,7 @@ class EnumTest extends TestCase
      */
     public function testThatInvalidObjectAliasThrowsException(): void
     {
-        InvalidObjectAliasEnumerationObjects::iterator();
+        InvalidObjectAliasEnumerationObjectsEnum::iterator();
     }
 
     /**
@@ -213,27 +213,28 @@ class EnumTest extends TestCase
      */
     public function testThatInvalidNumberAliasThrowsException(): void
     {
-        InvalidNumberAliasEnumerationObjects::iterator();
+        InvalidNumberAliasEnumerationObjectsEnum::iterator();
     }
 
     /**
      * @expectedException LogicException
-     * @expectedExceptionMessage Enum object in class Zlikavac32\Enum\Tests\Fixtures\WrongClassEnumerationObjects must
-     *     be an instance of Zlikavac32\Enum\Enum (an instance of Zlikavac32\Enum\Tests\Fixtures\ADummy received)
+     * @expectedExceptionMessage Enum object in class Zlikavac32\Enum\Tests\Fixtures\WrongClassEnumerationObjectsEnum
+     *     must be an instance of Zlikavac32\Enum\Tests\Fixtures\WrongClassEnumerationObjectsEnum (an instance of
+     *     Zlikavac32\Enum\Tests\Fixtures\AWrongClassEnumerationObjectsDummyEnum received)
      */
     public function testThatWrongEnumInstanceThrowsException(): void
     {
-        WrongClassEnumerationObjects::iterator();
+        WrongClassEnumerationObjectsEnum::iterator();
     }
 
     /**
      * @expectedException LogicException
-     * @expectedExceptionMessage Enum object in class Zlikavac32\Enum\Tests\Fixtures\NonObjectEnumerationObjects must
-     *     be an instance of Zlikavac32\Enum\Enum (integer received)
+     * @expectedExceptionMessage Enum object in class Zlikavac32\Enum\Tests\Fixtures\NonObjectEnumerationObjectsEnum
+     *     must be an instance of Zlikavac32\Enum\Tests\Fixtures\NonObjectEnumerationObjectsEnum (integer received)
      */
     public function testThatObjectEnumThrowsException(): void
     {
-        NonObjectEnumerationObjects::iterator();
+        NonObjectEnumerationObjectsEnum::iterator();
     }
 
     /**

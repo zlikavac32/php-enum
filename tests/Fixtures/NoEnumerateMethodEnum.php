@@ -6,7 +6,7 @@ namespace Zlikavac32\Enum\Tests\Fixtures;
 
 use Zlikavac32\Enum\Enum;
 
-abstract class DefaultCreateEnumerationObjects extends Enum
+abstract class NoEnumerateMethodEnum extends Enum
 {
 
 }
