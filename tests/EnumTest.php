@@ -7,6 +7,7 @@ namespace Zlikavac32\Enum\Tests;
 use LogicException;
 use PHPUnit\Framework\TestCase;
 use Zlikavac32\Enum\Tests\Fixtures\DefaultCreateEnumerationObjects;
+use Zlikavac32\Enum\Tests\Fixtures\DuplicateNameEnum;
 use Zlikavac32\Enum\Tests\Fixtures\EnumThatDependsOnEnum;
 use Zlikavac32\Enum\Tests\Fixtures\InvalidAliasNameEnum;
 use Zlikavac32\Enum\Tests\Fixtures\InvalidNumberAliasEnumerationObjects;
@@ -315,5 +316,14 @@ class EnumTest extends TestCase
     public function testThatToStringThrowsExceptionWhenNotConstructedCorrectly(): void
     {
         (new NonAbstractEnum())->__toString();
+    }
+
+    /**
+     * @expectedException LogicException
+     * @expectedExceptionMessage Duplicate name exists in enum Zlikavac32\Enum\Tests\Fixtures\DuplicateNameEnum
+     */
+    public function testThatDuplicateElementThrowsException(): void
+    {
+        DuplicateNameEnum::ENUM_A();
     }
 }

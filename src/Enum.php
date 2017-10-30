@@ -229,13 +229,13 @@ abstract class Enum implements Serializable
         $objectsOrEnumNames = static::enumerate();
 
         if (count($objectsOrEnumNames) === 0) {
-            throw new LogicException(sprintf('Enumeration objects array in class %s can not be empty', static::class));
+            throw new LogicException(sprintf('Enumeration objects array in class %s can not be empty', $class));
         }
 
         if (self::collectionRepresentsSimpleEnumeration($objectsOrEnumNames)) {
-            $objects = self::createDynamicEnumObjects($objectsOrEnumNames);
+            $objects = self::createDynamicEnumObjects($class, $objectsOrEnumNames);
         } else {
-            self::assertValidEnumCollection($objectsOrEnumNames);
+            self::assertValidEnumCollection($class, $objectsOrEnumNames);
 
             $objects = $objectsOrEnumNames;
         }
@@ -267,30 +267,34 @@ abstract class Enum implements Serializable
         return is_int($key);
     }
 
-    private static function assertValidEnumCollection(array $enumCollection): void
+    private static function assertValidEnumCollection(string $class, array $enumCollection): void
     {
         foreach ($enumCollection as $alias => $object) {
-            self::assertValidStringAlias($alias);
-            self::assertValidEnumObject($object);
+            self::assertValidStringAlias($class, $alias);
+            self::assertValidEnumObject($class, $object);
         }
     }
 
-    private static function createDynamicEnumObjects(array $enumNames): array
+    private static function createDynamicEnumObjects(string $class, array $enumNames): array
     {
-        $evalString = sprintf('return new class extends %s {};', static::class);
+        $evalString = sprintf('return new class extends %s {};', $class);
         $objects = [];
         //We don't care about the indexes whether they are strings or are they out of order
         //That may change in the future though
         foreach ($enumNames as $enumName) {
-            self::assertValidStringAlias($enumName);
+            self::assertValidStringAlias($class, $enumName);
             //eval is in a controlled environment but I'm glad that you're careful
             $objects[$enumName] = eval($evalString);
         }
 
-        return $objects;
+        if (count($enumNames) === count($objects)) {
+            return $objects;
+        }
+
+        throw new LogicException(sprintf('Duplicate name exists in enum %s', $class));
     }
 
-    private static function assertValidStringAlias($alias): void
+    private static function assertValidStringAlias(string $class, $alias): void
     {
         if (is_string($alias)) {
             self::assertValidAliasPattern($alias);
@@ -305,7 +309,7 @@ abstract class Enum implements Serializable
         }
 
         throw new LogicException(
-            sprintf('Alias %s in enum class %s is not valid alias', $formattedAlias, static::class)
+            sprintf('Alias %s in enum class %s is not valid alias', $formattedAlias, $class)
         );
     }
 
@@ -320,9 +324,9 @@ abstract class Enum implements Serializable
         throw new LogicException(sprintf('Alias "%s" does not match pattern %s', $alias, $pattern));
     }
 
-    private static function assertValidEnumObject($object): void
+    private static function assertValidEnumObject(string $class, $object): void
     {
-        if ($object instanceof static) {
+        if ($object instanceof $class) {
             return;
         }
 
@@ -336,7 +340,7 @@ abstract class Enum implements Serializable
             sprintf(
                 'Enum object in class %s must be an instance of %s (%s received)',
                 static::class,
-                Enum::class,
+                $class,
                 $resolvedType
             )
         );
