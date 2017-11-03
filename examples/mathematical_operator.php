@@ -92,7 +92,7 @@ abstract class MathematicalOperator extends Enum
 var_dump(
     MathematicalOperator::PLUS()
         ->apply(10, 20)
-);
+); // double(30)
 
 //We can iterate over every operator and let him apply its operation. We also override __toString() method
 
@@ -112,3 +112,8 @@ foreach (MathematicalOperator::iterator() as $operator) {
         )
     );
 }
+
+// string(21) "10.00 + 20.00 = 30.00"
+// string(22) "10.00 - 20.00 = -10.00"
+// string(22) "10.00 * 20.00 = 200.00"
+// string(20) "10.00 / 20.00 = 0.50"

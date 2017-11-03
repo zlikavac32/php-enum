@@ -57,8 +57,9 @@ function dumpGender(Gender $gender)
 var_dump(
     Gender::FEMALE()
         ->symbol()
-);
-var_dump(Gender::MALE() === Gender::FEMALE());
-var_dump(Gender::MALE() === Gender::MALE());
+); // string(1) "F"
 
-dumpGender(Gender::MALE());
+var_dump(Gender::MALE() === Gender::FEMALE()); // bool(false)
+var_dump(Gender::MALE() === Gender::MALE()); // bool(true)
+
+dumpGender(Gender::MALE()); // string(1) "M"

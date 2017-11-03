@@ -76,3 +76,8 @@ abstract class WorldSide extends Enum
 foreach (WorldSide::iterator() as $worldSide) {
     var_dump(sprintf('Opposite of %s is %s', (string) $worldSide, (string) $worldSide->opposite()));
 }
+
+// string(26) "Opposite of NORTH is SOUTH"
+// string(26) "Opposite of SOUTH is NORTH"
+// string(24) "Opposite of EAST is WEST"
+// string(24) "Opposite of WEST is EAST"

@@ -119,3 +119,24 @@ function lex(string $input): Generator
 foreach (lex('12 + 89 * 19 - 119') as [$token, $match, $position]) {
     var_dump(sprintf('%s("%s", %d)', $token->name(), $match, $position));
 }
+
+// string(57) "T_PLUS - pattern: \\+; escaped: \\+; named: (?P<T_PLUS>\\+))"
+// string(56) "T_MINUS - pattern: -; escaped: -; named: (?P<T_MINUS>-))"
+// string(59) "T_TIMES - pattern: \\*; escaped: \\*; named: (?P<T_TIMES>\\*))"
+// string(54) "T_DIV - pattern: /; escaped: \\/; named: (?P<T_DIV>\\/))"
+// string(62) "T_SPACE - pattern: \\s+; escaped: \\s+; named: (?P<T_SPACE>\\s+))"
+// string(64) "T_NUMBER - pattern: \\d+; escaped: \\d+; named: (?P<T_NUMBER>\\d+))"
+// string(60) "T_INVALID - pattern: .; escaped: .; named: (?P<T_INVALID>.))"
+// string(17) "T_NUMBER("12", 0)"
+// string(15) "T_SPACE(" ", 2)"
+// string(14) "T_PLUS("+", 3)"
+// string(15) "T_SPACE(" ", 4)"
+// string(17) "T_NUMBER("89", 5)"
+// string(15) "T_SPACE(" ", 7)"
+// string(15) "T_TIMES("*", 8)"
+// string(15) "T_SPACE(" ", 9)"
+// string(18) "T_NUMBER("19", 10)"
+// string(16) "T_SPACE(" ", 12)"
+// string(16) "T_MINUS("-", 13)"
+// string(16) "T_SPACE(" ", 14)"
+// string(19) "T_NUMBER("119", 15)"
