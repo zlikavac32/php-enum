@@ -20,7 +20,7 @@ class EnumNotFoundException extends LogicException
 
     public function __construct(string $missingEnumName, string $enumClass, int $code = 0, Throwable $previous = null)
     {
-        parent::__construct(sprintf('Enum object %s missing in %s', $missingEnumName, $enumClass), $code, $previous);
+        parent::__construct(sprintf('Enum element %s missing in %s', $missingEnumName, $enumClass), $code, $previous);
         $this->missingEnumName = $missingEnumName;
         $this->enumClass = $enumClass;
     }

@@ -73,7 +73,7 @@ class EnumTest extends TestCase
 
     /**
      * @expectedException LogicException
-     * @expectedExceptionMessage Cloning enum object is not allowed
+     * @expectedExceptionMessage Cloning enum element is not allowed
      */
     public function testThatCloneIsNotSupported(): void
     {
@@ -87,7 +87,7 @@ class EnumTest extends TestCase
 
     /**
      * @expectedException \Zlikavac32\Enum\EnumNotFoundException
-     * @expectedExceptionMessage Enum object I_DONT_EXIST missing in Zlikavac32\Enum\Tests\Fixtures\ValidObjectsEnum
+     * @expectedExceptionMessage Enum element I_DONT_EXIST missing in Zlikavac32\Enum\Tests\Fixtures\ValidObjectsEnum
      */
     public function testThatValueOfThrowsExceptionWhenEnumDoesNotExist(): void
     {
@@ -150,8 +150,8 @@ class EnumTest extends TestCase
 
     /**
      * @expectedException LogicException
-     * @expectedExceptionMessage Enumeration objects array in class
-     *     Zlikavac32\Enum\Tests\Fixtures\ZeroLengthEnumerationObjects can not be empty
+     * @expectedExceptionMessage Enum Zlikavac32\Enum\Tests\Fixtures\ZeroLengthEnumerationObjectsEnum must define at
+     *     least one element
      */
     public function testThatZeroLengthEnumerationObjectConfigurationThrowsException(): void
     {
@@ -160,7 +160,7 @@ class EnumTest extends TestCase
 
     /**
      * @expectedException LogicException
-     * @expectedExceptionMessage Enum class Zlikavac32\Enum\Tests\Fixtures\NonAbstractEnum must be declared as abstract
+     * @expectedExceptionMessage Enum Zlikavac32\Enum\Tests\Fixtures\NonAbstractEnum must be declared as abstract
      */
     public function testThatNonAbstractEnumThrowsException(): void
     {
@@ -169,7 +169,7 @@ class EnumTest extends TestCase
 
     /**
      * @expectedException LogicException
-     * @expectedExceptionMessage Alias "INVA LID" does not match pattern /^[a-zA-Z_][a-zA-Z_0-9]*$/i
+     * @expectedExceptionMessage Element name "INVA LID" does not match pattern /^[a-zA-Z_][a-zA-Z_0-9]*$/i
      */
     public function testThatInvalidAliasNameThrowsException(): void
     {
@@ -188,7 +188,7 @@ class EnumTest extends TestCase
 
     /**
      * @expectedException \Zlikavac32\Enum\EnumNotFoundException
-     * @expectedExceptionMessage Enum object I_DONT_EXIST missing in Zlikavac32\Enum\Tests\Fixtures\ValidObjectsEnum
+     * @expectedExceptionMessage Enum element I_DONT_EXIST missing in Zlikavac32\Enum\Tests\Fixtures\ValidObjectsEnum
      */
     public function testThatAccessingNonExistingEnumThrowsException(): void
     {
@@ -197,8 +197,8 @@ class EnumTest extends TestCase
 
     /**
      * @expectedException LogicException
-     * @expectedExceptionMessage Alias 0 in enum class
-     *     Zlikavac32\Enum\Tests\Fixtures\InvalidObjectAliasEnumerationObjects is not valid alias
+     * @expectedExceptionMessage Element name 0 in enum
+     *     Zlikavac32\Enum\Tests\Fixtures\InvalidObjectAliasEnumerationObjectsEnum is not valid
      */
     public function testThatInvalidObjectAliasThrowsException(): void
     {
@@ -207,9 +207,9 @@ class EnumTest extends TestCase
 
     /**
      * @expectedException LogicException
-     * @expectedExceptionMessage Alias (object instance of
-     *     Zlikavac32\Enum\Tests\Fixtures\InvalidNumberAliasEnumerationObjectsDummy) in enum class
-     *     Zlikavac32\Enum\Tests\Fixtures\InvalidNumberAliasEnumerationObjects is not valid alias
+     * @expectedExceptionMessage Element name (object instance of
+     *     Zlikavac32\Enum\Tests\Fixtures\InvalidNumberAliasEnumerationObjectsDummyEnum) in enum
+     *     Zlikavac32\Enum\Tests\Fixtures\InvalidNumberAliasEnumerationObjectsEnum is not valid
      */
     public function testThatInvalidNumberAliasThrowsException(): void
     {
@@ -218,8 +218,9 @@ class EnumTest extends TestCase
 
     /**
      * @expectedException LogicException
-     * @expectedExceptionMessage Enum object in class Zlikavac32\Enum\Tests\Fixtures\WrongClassEnumerationObjectsEnum
-     *     must be an instance of Zlikavac32\Enum\Tests\Fixtures\WrongClassEnumerationObjectsEnum (an instance of
+     * @expectedExceptionMessage Enum element object in enum
+     *     Zlikavac32\Enum\Tests\Fixtures\WrongClassEnumerationObjectsEnum must be an instance of
+     *     Zlikavac32\Enum\Tests\Fixtures\WrongClassEnumerationObjectsEnum (an instance of
      *     Zlikavac32\Enum\Tests\Fixtures\AWrongClassEnumerationObjectsDummyEnum received)
      */
     public function testThatWrongEnumInstanceThrowsException(): void
@@ -229,8 +230,9 @@ class EnumTest extends TestCase
 
     /**
      * @expectedException LogicException
-     * @expectedExceptionMessage Enum object in class Zlikavac32\Enum\Tests\Fixtures\NonObjectEnumerationObjectsEnum
-     *     must be an instance of Zlikavac32\Enum\Tests\Fixtures\NonObjectEnumerationObjectsEnum (integer received)
+     * @expectedExceptionMessage Enum element object in enum
+     *     Zlikavac32\Enum\Tests\Fixtures\NonObjectEnumerationObjectsEnum must be an instance of
+     *     Zlikavac32\Enum\Tests\Fixtures\NonObjectEnumerationObjectsEnum (integer received)
      */
     public function testThatObjectEnumThrowsException(): void
     {
@@ -239,7 +241,7 @@ class EnumTest extends TestCase
 
     /**
      * @expectedException LogicException
-     * @expectedExceptionMessage Serialization/deserialization of enum object is not allowed
+     * @expectedExceptionMessage Serialization/deserialization of enum element is not allowed
      */
     public function testThatSetStateThrowsException(): void
     {
@@ -248,7 +250,7 @@ class EnumTest extends TestCase
 
     /**
      * @expectedException LogicException
-     * @expectedExceptionMessage Serialization/deserialization of enum object is not allowed
+     * @expectedExceptionMessage Serialization/deserialization of enum element is not allowed
      */
     public function testThatSleepThrowsException(): void
     {
@@ -257,7 +259,7 @@ class EnumTest extends TestCase
 
     /**
      * @expectedException LogicException
-     * @expectedExceptionMessage Serialization/deserialization of enum object is not allowed
+     * @expectedExceptionMessage Serialization/deserialization of enum element is not allowed
      */
     public function testThatWakeupThrowsException(): void
     {
@@ -266,7 +268,7 @@ class EnumTest extends TestCase
 
     /**
      * @expectedException LogicException
-     * @expectedExceptionMessage Serialization/deserialization of enum object is not allowed
+     * @expectedExceptionMessage Serialization/deserialization of enum element is not allowed
      */
     public function testThatSerializeThrowsException(): void
     {
@@ -275,7 +277,7 @@ class EnumTest extends TestCase
 
     /**
      * @expectedException LogicException
-     * @expectedExceptionMessage Serialization/deserialization of enum object is not allowed
+     * @expectedExceptionMessage Serialization/deserialization of enum element is not allowed
      */
     public function testThatUnserializeThrowsException(): void
     {
@@ -294,7 +296,8 @@ class EnumTest extends TestCase
 
     /**
      * @expectedException LogicException
-     * @expectedExceptionMessage It seems you tried to manually create enum outside of enumerate() method for enum Zlikavac32\Enum\Tests\Fixtures\NonAbstractEnum
+     * @expectedExceptionMessage It seems you tried to manually create enum outside of enumerate() method for enum
+     *     Zlikavac32\Enum\Tests\Fixtures\NonAbstractEnum
      */
     public function testThatNameThrowsExceptionWhenNotConstructedCorrectly(): void
     {
@@ -303,7 +306,8 @@ class EnumTest extends TestCase
 
     /**
      * @expectedException LogicException
-     * @expectedExceptionMessage It seems you tried to manually create enum outside of enumerate() method for enum Zlikavac32\Enum\Tests\Fixtures\NonAbstractEnum
+     * @expectedExceptionMessage It seems you tried to manually create enum outside of enumerate() method for enum
+     *     Zlikavac32\Enum\Tests\Fixtures\NonAbstractEnum
      */
     public function testThatOrdinalThrowsExceptionWhenNotConstructedCorrectly(): void
     {
@@ -312,7 +316,8 @@ class EnumTest extends TestCase
 
     /**
      * @expectedException LogicException
-     * @expectedExceptionMessage It seems you tried to manually create enum outside of enumerate() method for enum Zlikavac32\Enum\Tests\Fixtures\NonAbstractEnum
+     * @expectedExceptionMessage It seems you tried to manually create enum outside of enumerate() method for enum
+     *     Zlikavac32\Enum\Tests\Fixtures\NonAbstractEnum
      */
     public function testThatToStringThrowsExceptionWhenNotConstructedCorrectly(): void
     {
@@ -321,7 +326,7 @@ class EnumTest extends TestCase
 
     /**
      * @expectedException LogicException
-     * @expectedExceptionMessage Duplicate name exists in enum Zlikavac32\Enum\Tests\Fixtures\DuplicateNameEnum
+     * @expectedExceptionMessage Duplicate element exists in enum Zlikavac32\Enum\Tests\Fixtures\DuplicateNameEnum
      */
     public function testThatDuplicateElementThrowsException(): void
     {
