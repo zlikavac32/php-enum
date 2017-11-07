@@ -100,32 +100,32 @@ abstract class Enum implements Serializable
         throw new LogicException('Cloning enum element is not allowed');
     }
 
-    final public function __set_state()
+    final public static function __set_state()
     {
-        throw $this->createNoSerializeUnserializeException();
+        throw self::createNoSerializeUnserializeException();
     }
 
     final public function __wakeup()
     {
-        throw $this->createNoSerializeUnserializeException();
+        throw self::createNoSerializeUnserializeException();
     }
 
     final public function __sleep()
     {
-        throw $this->createNoSerializeUnserializeException();
+        throw self::createNoSerializeUnserializeException();
     }
 
     final public function serialize()
     {
-        throw $this->createNoSerializeUnserializeException();
+        throw self::createNoSerializeUnserializeException();
     }
 
     final public function unserialize($serialized): object
     {
-        throw $this->createNoSerializeUnserializeException();
+        throw self::createNoSerializeUnserializeException();
     }
 
-    private function createNoSerializeUnserializeException(): Throwable
+    private static function createNoSerializeUnserializeException(): Throwable
     {
         return new LogicException('Serialization/deserialization of enum element is not allowed');
     }

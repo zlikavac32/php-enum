@@ -245,7 +245,7 @@ class EnumTest extends TestCase
      */
     public function testThatSetStateThrowsException(): void
     {
-        ValidStringEnum::ENUM_A()->__set_state();
+        ValidStringEnum::__set_state();
     }
 
     /**
