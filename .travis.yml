@@ -21,3 +21,4 @@ matrix:
 
 script:
     - vendor/bin/phpunit
+    - vendor/bin/phpspec run
