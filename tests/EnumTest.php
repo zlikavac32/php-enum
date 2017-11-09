@@ -24,6 +24,19 @@ use Zlikavac32\Enum\Tests\Fixtures\ZeroLengthEnumerationObjectsEnum;
 
 class EnumTest extends TestCase
 {
+    public function testThatIdentityCheckWorks(): void
+    {
+        $this->assertTrue(ValidStringEnum::ENUM_A() === ValidStringEnum::ENUM_A());
+        $this->assertTrue(ValidStringEnum::ENUM_B() === ValidStringEnum::ENUM_B());
+        $this->assertTrue(ValidStringEnum::ENUM_A() !== ValidStringEnum::ENUM_B());
+    }
+
+    public function testThatEqualityCheckWorks(): void
+    {
+        $this->assertTrue(ValidStringEnum::ENUM_A() == ValidStringEnum::ENUM_A());
+        $this->assertTrue(ValidStringEnum::ENUM_B() == ValidStringEnum::ENUM_B());
+        $this->assertTrue(ValidStringEnum::ENUM_A() != ValidStringEnum::ENUM_B());
+    }
 
     public function testThatEnumObjectsHaveValidOrdinal(): void
     {
