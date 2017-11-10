@@ -244,9 +244,9 @@ abstract class Enum implements Serializable
     {
         $i = 0;
 
-        foreach ($objects as $alias => $object) {
+        foreach ($objects as $elementName => $object) {
             $object->ordinal = $i++;
-            $object->name = $alias;
+            $object->name = $elementName;
         }
     }
 
@@ -269,8 +269,8 @@ abstract class Enum implements Serializable
 
     private static function assertValidEnumCollection(string $class, array $enumCollection): void
     {
-        foreach ($enumCollection as $alias => $object) {
-            self::assertValidStringName($class, $alias);
+        foreach ($enumCollection as $elementName => $object) {
+            self::assertElementNameIsString($class, $elementName);
             self::assertValidEnumElementObjectType($class, $object);
         }
     }
@@ -281,10 +281,10 @@ abstract class Enum implements Serializable
         $objects = [];
         //We don't care about the indexes whether they are strings or are they out of order
         //That may change in the future though
-        foreach ($enumNames as $enumName) {
-            self::assertValidStringName($class, $enumName);
+        foreach ($enumNames as $elementName) {
+            self::assertElementNameIsString($class, $elementName);
             //eval is in a controlled environment but I'm glad that you're careful
-            $objects[$enumName] = eval($evalString);
+            $objects[$elementName] = eval($evalString);
         }
 
         if (count($enumNames) === count($objects)) {
@@ -294,7 +294,7 @@ abstract class Enum implements Serializable
         throw new LogicException(sprintf('Duplicate element exists in enum %s', $class));
     }
 
-    private static function assertValidStringName(string $class, $name): void
+    private static function assertElementNameIsString(string $class, $name): void
     {
         if (is_string($name)) {
             self::assertValidNamePattern($name);
@@ -303,13 +303,13 @@ abstract class Enum implements Serializable
         }
 
         if (is_object($name)) {
-            $formattedAlias = sprintf('(object instance of %s)', get_class($name));
+            $formattedElementName = sprintf('(object instance of %s)', get_class($name));
         } else {
-            $formattedAlias = $name;
+            $formattedElementName = $name;
         }
 
         throw new LogicException(
-            sprintf('Element name %s in enum %s is not valid', $formattedAlias, $class)
+            sprintf('Element name %s in enum %s is not valid', $formattedElementName, $class)
         );
     }
 
