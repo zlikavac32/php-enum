@@ -235,14 +235,19 @@ abstract class Enum implements Serializable
             $objects = $objectsOrEnumNames;
         }
 
+        self::populateEnumObjectProperties($objects);
+
+        return $objects;
+    }
+
+    private static function populateEnumObjectProperties(array $objects): void
+    {
         $i = 0;
 
         foreach ($objects as $alias => $object) {
             $object->ordinal = $i++;
             $object->name = $alias;
         }
-
-        return $objects;
     }
 
     private static function assertEnumClassIsAbstract(string $fqn): void
