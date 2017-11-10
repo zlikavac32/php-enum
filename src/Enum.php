@@ -39,16 +39,11 @@ abstract class Enum implements Serializable
         $this->correctlyInitialized = true;
     }
 
-    private function assertValidConstructionContext(): bool
+    private function assertValidConstructionContext(): void
     {
-        $class = get_class($this);
-
-        while ($class) {
-            if (isset(self::$enumConstructionContext[$class])) {
-                return true;
-            }
-
-            $class = get_parent_class($class);
+        //Expected usage is new class extends Enum so first parent should be our construction context
+        if (isset(self::$enumConstructionContext[get_parent_class($this)])) {
+            return ;
         }
 
         throw new LogicException(
