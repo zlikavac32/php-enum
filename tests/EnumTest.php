@@ -84,6 +84,14 @@ class EnumTest extends TestCase
         );
     }
 
+    public function testThatEnumObjectHasValidJsonEncodeRepresentation(): void
+    {
+        $this->assertSame(
+            '"ENUM_A"',
+            json_encode(ValidObjectsEnum::ENUM_A())
+        );
+    }
+
     /**
      * @expectedException LogicException
      * @expectedExceptionMessage Cloning enum element is not allowed

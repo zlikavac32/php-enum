@@ -7,12 +7,13 @@ namespace Zlikavac32\Enum;
 use ArrayIterator;
 use InvalidArgumentException;
 use Iterator;
+use JsonSerializable;
 use LogicException;
 use ReflectionClass;
 use Serializable;
 use Throwable;
 
-abstract class Enum implements Serializable
+abstract class Enum implements Serializable, JsonSerializable
 {
     /**
      * @var Enum[][]
@@ -126,6 +127,11 @@ abstract class Enum implements Serializable
     }
 
     public function __toString(): string
+    {
+        return $this->name();
+    }
+
+    public function jsonSerialize()
     {
         return $this->name();
     }

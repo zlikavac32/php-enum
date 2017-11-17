@@ -73,6 +73,7 @@ This class also exposes few public static and non static methods which are liste
 ### Object methods
 
 - `__toString(): string` - returns default string representation which is the enum name itself
+- `jsonSerialize(): mixed` - defaults to element name
 - `final name(): string` - returns enum object name
 - `final ordinal(): int` - returns ordinal number of that enum object (it's position in the collection) starting from 0
 
