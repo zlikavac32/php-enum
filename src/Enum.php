@@ -229,21 +229,26 @@ abstract class Enum implements Serializable, JsonSerializable
         /* @var Enum[]|string[] $objectsOrEnumNames */
         $objectsOrEnumNames = static::enumerate();
 
+        $objects = self::normalizeElementsArray($class, $objectsOrEnumNames);
+
+        self::populateEnumObjectProperties($objects);
+
+        return $objects;
+    }
+
+    private static function normalizeElementsArray(string $class, array $objectsOrEnumNames): array
+    {
         if (count($objectsOrEnumNames) === 0) {
             throw new LogicException(sprintf('Enum %s must define at least one element', $class));
         }
 
         if (self::collectionRepresentsSimpleEnumeration($objectsOrEnumNames)) {
-            $objects = self::createDynamicEnumElementObjects($class, $objectsOrEnumNames);
-        } else {
-            self::assertValidEnumCollection($class, $objectsOrEnumNames);
-
-            $objects = $objectsOrEnumNames;
+            return self::createDynamicEnumElementObjects($class, $objectsOrEnumNames);
         }
 
-        self::populateEnumObjectProperties($objects);
+        self::assertValidEnumCollection($class, $objectsOrEnumNames);
 
-        return $objects;
+        return $objectsOrEnumNames;
     }
 
     private static function populateEnumObjectProperties(array $objects): void
