@@ -116,7 +116,7 @@ abstract class Enum implements Serializable, JsonSerializable
         throw self::createNoSerializeUnserializeException();
     }
 
-    final public function unserialize($serialized): object
+    final public function unserialize($serialized)
     {
         throw self::createNoSerializeUnserializeException();
     }
