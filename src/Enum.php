@@ -248,10 +248,10 @@ abstract class Enum implements Serializable, JsonSerializable
 
     private static function populateEnumObjectProperties(array $objects): void
     {
-        $i = 0;
+        $ordinal = 0;
 
         foreach ($objects as $elementName => $object) {
-            $object->ordinal = $i++;
+            $object->ordinal = $ordinal++;
             $object->name = $elementName;
         }
     }
