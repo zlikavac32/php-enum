@@ -1,6 +1,6 @@
 # PHP Enum
 
-[![Build Status](https://travis-ci.org/zlikavac32/php-enum.svg?branch=master)](https://travis-ci.org/zlikavac32/php-enum) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/zlikavac32/php-enum/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/zlikavac32/php-enum/?branch=master) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/7934e7f641b3434ea510adad46794fbb)](https://www.codacy.com/app/zlikavac32/php-enum?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=zlikavac32/php-enum&amp;utm_campaign=Badge_Grade)
+[![Build Status](https://travis-ci.org/zlikavac32/php-enum.svg?branch=master)](https://travis-ci.org/zlikavac32/php-enum) [![Latest Stable Version](https://poser.pugx.org/zlikavac32/php-enum/v/stable)](https://packagist.org/packages/zlikavac32/php-enum) [![License](https://poser.pugx.org/zlikavac32/php-enum/license)](https://packagist.org/packages/zlikavac32/php-enum) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/zlikavac32/php-enum/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/zlikavac32/php-enum/?branch=master) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/7934e7f641b3434ea510adad46794fbb)](https://www.codacy.com/app/zlikavac32/php-enum?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=zlikavac32/php-enum&amp;utm_campaign=Badge_Grade)
 
 This library aims to make your everyday enumeration use in PHP easier.
 
