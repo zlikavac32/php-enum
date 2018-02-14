@@ -1,5 +1,9 @@
 # PHP-Enum changelog
 
+## 1.0.2 (2018-02-14)
+
+* **[CHANGED]** Enum implements `JsonSerializable`
+
 ## 1.0.1 (2017-11-10)
 
 * **[CHANGED]** Standardized error messages
