@@ -1,5 +1,9 @@
 # PHP-Enum changelog
 
+## 1.0.3 (2018-03-24)
+
+* **[FIXED]** Workaround for [https://bugs.php.net/bug.php?id=73816](https://bugs.php.net/bug.php?id=73816)
+
 ## 1.0.2 (2018-02-14)
 
 * **[CHANGED]** Enum implements `JsonSerializable`
