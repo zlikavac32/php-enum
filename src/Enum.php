@@ -34,6 +34,13 @@ abstract class Enum implements Serializable, JsonSerializable
 
     private $correctlyInitialized = false;
 
+    /**
+     * Number of eval-s executed so far (workaround for PHP bug #73816)
+     *
+     * @var int
+     */
+    private static $evalLine = 0;
+
     public function __construct()
     {
         $this->assertValidConstructionContext();
@@ -288,7 +295,8 @@ abstract class Enum implements Serializable, JsonSerializable
 
     private static function createDynamicEnumElementObjects(string $class, array $enumNames): array
     {
-        $evalString = sprintf('return new class extends %s {};', $class);
+        $evalString = str_repeat("\n", self::$evalLine++) . sprintf('return new class extends %s {};', $class);
+
         $objects = [];
         //We don't care about the indexes whether they are strings or are they out of order
         //That may change in the future though

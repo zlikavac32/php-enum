@@ -8,6 +8,8 @@ use LogicException;
 use PHPUnit\Framework\TestCase;
 use Zlikavac32\Enum\Tests\Fixtures\DuplicateNameEnum;
 use Zlikavac32\Enum\Tests\Fixtures\EnumThatDependsOnEnum;
+use Zlikavac32\Enum\Tests\Fixtures\EnumWithSomeVeryVeryLongNameA;
+use Zlikavac32\Enum\Tests\Fixtures\EnumWithSomeVeryVeryLongNameB;
 use Zlikavac32\Enum\Tests\Fixtures\InvalidAliasNameEnum;
 use Zlikavac32\Enum\Tests\Fixtures\InvalidNumberAliasEnumerationObjectsEnum;
 use Zlikavac32\Enum\Tests\Fixtures\InvalidObjectAliasEnumerationObjectsEnum;
@@ -352,5 +354,18 @@ class EnumTest extends TestCase
     public function testThatDuplicateElementThrowsException(): void
     {
         DuplicateNameEnum::ENUM_A();
+    }
+
+    public function testThatWorkaroundForPHPEvalBugWorks(): void
+    {
+        try {
+            EnumWithSomeVeryVeryLongNameA::ENUM_A();
+            $this->assertInstanceOf(
+                EnumWithSomeVeryVeryLongNameB::class,
+                EnumWithSomeVeryVeryLongNameB::ENUM_A()
+            );
+        } catch (LogicException $e) {
+            $this->fail('Workaround no longer works');
+        }
     }
 }
