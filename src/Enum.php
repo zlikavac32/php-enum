@@ -98,6 +98,19 @@ abstract class Enum implements Serializable, JsonSerializable
         return $this->name;
     }
 
+    final public function isAnyOf(Enum ...$enums): bool
+    {
+        $this->assertCorrectlyInitialized();
+
+        foreach ($enums as $enum) {
+            if ($this === $enum) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     final public function __clone()
     {
         throw new LogicException('Cloning enum element is not allowed');
@@ -161,6 +174,18 @@ abstract class Enum implements Serializable, JsonSerializable
 
     /**
      * @param string $name
+     *
+     * @return bool
+     */
+    final public static function contains(string $name): bool
+    {
+        return isset(self::retrieveCurrentContextEnumerations()[$name]);
+    }
+
+    /**
+     * @param string $name
+     *
+     * @todo: make final as is stated in docs
      *
      * @return static
      */

@@ -40,6 +40,16 @@ class EnumTest extends TestCase
         $this->assertTrue(ValidStringEnum::ENUM_A() != ValidStringEnum::ENUM_B());
     }
 
+    public function testThatAnyOfReturnsTrue(): void
+    {
+        $this->assertTrue(ValidStringEnum::ENUM_A()->isAnyOf(ValidStringEnum::ENUM_B(), ValidStringEnum::ENUM_A()));
+    }
+
+    public function testThatAnyOfReturnsFalse(): void
+    {
+        $this->assertFalse(ValidStringEnum::ENUM_A()->isAnyOf(ValidStringEnum::ENUM_B()));
+    }
+
     public function testThatEnumObjectsHaveValidOrdinal(): void
     {
         $this->assertSame(
@@ -115,6 +125,16 @@ class EnumTest extends TestCase
     public function testThatValueOfThrowsExceptionWhenEnumDoesNotExist(): void
     {
         ValidObjectsEnum::valueOf('I_DONT_EXIST');
+    }
+
+    public function testThatContainsReturnsTrueForExistingEnum(): void
+    {
+        $this->assertTrue(ValidObjectsEnum::contains('ENUM_A'));
+    }
+
+    public function testThatContainsReturnsFalseForNonExistingEnum(): void
+    {
+        $this->assertFalse(ValidObjectsEnum::contains('I_DONT_EXIST'));
     }
 
     public function testThatEnumObjectsHaveValidDefaultToStringImplementation(): void
@@ -312,9 +332,29 @@ class EnumTest extends TestCase
      * @expectedExceptionMessage It seems that enum is not correctly initialized. Did you forget to call
      *     parent::__construct() in enum Zlikavac32\Enum\Tests\Fixtures\InvalidOverrideConstructorEnum?
      */
-    public function testThatConstructMustBeCalled(): void
+    public function testThatConstructMustBeCalledForName(): void
     {
         (new InvalidOverrideConstructorEnum())->name();
+    }
+
+    /**
+     * @expectedException LogicException
+     * @expectedExceptionMessage It seems that enum is not correctly initialized. Did you forget to call
+     *     parent::__construct() in enum Zlikavac32\Enum\Tests\Fixtures\InvalidOverrideConstructorEnum?
+     */
+    public function testThatConstructMustBeCalledForOrdinal(): void
+    {
+        (new InvalidOverrideConstructorEnum())->ordinal();
+    }
+
+    /**
+     * @expectedException LogicException
+     * @expectedExceptionMessage It seems that enum is not correctly initialized. Did you forget to call
+     *     parent::__construct() in enum Zlikavac32\Enum\Tests\Fixtures\InvalidOverrideConstructorEnum?
+     */
+    public function testThatConstructMustBeCalledForIsAnyOf(): void
+    {
+        (new InvalidOverrideConstructorEnum())->isAnyOf();
     }
 
     /**

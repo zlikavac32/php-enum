@@ -67,6 +67,7 @@ This class also exposes few public static and non static methods which are liste
 ### Class methods
 
 - `final valueOf(string $name): static` - returns enum object identified by the name or throws an exception if none is found
+- `final contains(string $name): bool` - returns `true` if enum object identified by the name `$name` exists, `false` otherwise
 - `final values(): static[]` - returns all of the defined enum objects in order they were defined
 - `iterator(): Iterator<static>` - returns iterator object with all of the defined enum objects in order they were defined
 
@@ -76,6 +77,7 @@ This class also exposes few public static and non static methods which are liste
 - `jsonSerialize(): mixed` - defaults to element name
 - `final name(): string` - returns enum object name
 - `final ordinal(): int` - returns ordinal number of that enum object (it's position in the collection) starting from 0
+- `final isAnyOf(Enum ...$enums): bool` - returns `true` if enum object is in the `$enums` list, `false` otherwise
 
 Other methods serve as a way to restrict inconsistent behaviour, for example, to have to distinct objects of the same enum name. Check the [Restrictions](#restrictions) section for more info. 
 
