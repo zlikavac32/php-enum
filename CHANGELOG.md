@@ -1,5 +1,10 @@
 # PHP-Enum changelog
 
+## 1.1.0 (2018-04-12)
+
+* **[NEW]** Method `final isAnyOf(Enum ...$enums): bool`
+* **[NEW]** Method `final static contains(string $name): bool`
+
 ## 1.0.3 (2018-03-24)
 
 * **[FIXED]** Workaround for [https://bugs.php.net/bug.php?id=73816](https://bugs.php.net/bug.php?id=73816)
