@@ -6,6 +6,7 @@ namespace Zlikavac32\Enum;
 
 use LogicException;
 use Throwable;
+use function sprintf;
 
 class EnumNotFoundException extends LogicException
 {

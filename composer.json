@@ -21,7 +21,10 @@
     "autoload": {
         "psr-4": {
             "Zlikavac32\\Enum\\": "src/"
-        }
+        },
+        "files": [
+            "src/functions.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

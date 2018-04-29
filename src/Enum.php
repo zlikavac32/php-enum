@@ -9,9 +9,17 @@ use InvalidArgumentException;
 use Iterator;
 use JsonSerializable;
 use LogicException;
-use ReflectionClass;
 use Serializable;
 use Throwable;
+use function array_values;
+use function count;
+use function get_class;
+use function get_parent_class;
+use function is_int;
+use function key;
+use function reset;
+use function sprintf;
+use function str_repeat;
 
 abstract class Enum implements Serializable, JsonSerializable
 {
@@ -116,26 +124,44 @@ abstract class Enum implements Serializable, JsonSerializable
         throw new LogicException('Cloning enum element is not allowed');
     }
 
+    /**
+     * @throws Throwable
+     */
     final public static function __set_state()
     {
         throw self::createNoSerializeUnserializeException();
     }
 
+    /**
+     * @throws Throwable
+     */
     final public function __wakeup()
     {
         throw self::createNoSerializeUnserializeException();
     }
 
+    /**
+     * @throws Throwable
+     */
     final public function __sleep()
     {
         throw self::createNoSerializeUnserializeException();
     }
 
+    /**
+     * @return string|void
+     * @throws Throwable
+     */
     final public function serialize()
     {
         throw self::createNoSerializeUnserializeException();
     }
 
+    /**
+     * @param string $serialized
+     *
+     * @throws Throwable
+     */
     final public function unserialize($serialized)
     {
         throw self::createNoSerializeUnserializeException();
@@ -256,7 +282,7 @@ abstract class Enum implements Serializable, JsonSerializable
 
     private static function discoverEnumerationObjectsForClass(string $class)
     {
-        self::assertEnumClassIsAbstract($class);
+        assertEnumClassIsAbstract($class);
 
         /* @var Enum[]|string[] $objectsOrEnumNames */
         $objectsOrEnumNames = static::enumerate();
@@ -278,7 +304,7 @@ abstract class Enum implements Serializable, JsonSerializable
             return self::createDynamicEnumElementObjects($class, $objectsOrEnumNames);
         }
 
-        self::assertValidEnumCollection($class, $objectsOrEnumNames);
+        assertValidEnumCollection($class, $objectsOrEnumNames, static::class);
 
         return $objectsOrEnumNames;
     }
@@ -293,29 +319,12 @@ abstract class Enum implements Serializable, JsonSerializable
         }
     }
 
-    private static function assertEnumClassIsAbstract(string $fqn): void
-    {
-        if ((new ReflectionClass($fqn))->isAbstract()) {
-            return ;
-        }
-
-        throw new LogicException(sprintf('Enum %s must be declared as abstract', $fqn));
-    }
-
     private static function collectionRepresentsSimpleEnumeration(array $objectsOrEnumNames): bool
     {
         reset($objectsOrEnumNames);
         $key = key($objectsOrEnumNames);
 
         return is_int($key);
-    }
-
-    private static function assertValidEnumCollection(string $class, array $enumCollection): void
-    {
-        foreach ($enumCollection as $elementName => $object) {
-            self::assertElementNameIsString($class, $elementName);
-            self::assertValidEnumElementObjectType($class, $object);
-        }
     }
 
     private static function createDynamicEnumElementObjects(string $class, array $enumNames): array
@@ -326,7 +335,8 @@ abstract class Enum implements Serializable, JsonSerializable
         //We don't care about the indexes whether they are strings or are they out of order
         //That may change in the future though
         foreach ($enumNames as $elementName) {
-            self::assertElementNameIsString($class, $elementName);
+            assertElementNameIsString($class, $elementName);
+            assertValidNamePattern($elementName);
             //eval is in a controlled environment but I'm glad that you're careful
             $objects[$elementName] = eval($evalString);
         }
@@ -336,57 +346,5 @@ abstract class Enum implements Serializable, JsonSerializable
         }
 
         throw new LogicException(sprintf('Duplicate element exists in enum %s', $class));
-    }
-
-    private static function assertElementNameIsString(string $class, $name): void
-    {
-        if (is_string($name)) {
-            self::assertValidNamePattern($name);
-
-            return;
-        }
-
-        if (is_object($name)) {
-            $formattedElementName = sprintf('(object instance of %s)', get_class($name));
-        } else {
-            $formattedElementName = $name;
-        }
-
-        throw new LogicException(
-            sprintf('Element name %s in enum %s is not valid', $formattedElementName, $class)
-        );
-    }
-
-    private static function assertValidNamePattern(string $name): void
-    {
-        $pattern = '/^[a-zA-Z_][a-zA-Z_0-9]*$/i';
-
-        if (preg_match($pattern, $name)) {
-            return ;
-        }
-
-        throw new LogicException(sprintf('Element name "%s" does not match pattern %s', $name, $pattern));
-    }
-
-    private static function assertValidEnumElementObjectType(string $class, $object): void
-    {
-        if ($object instanceof $class) {
-            return;
-        }
-
-        if (is_object($object)) {
-            $resolvedType = 'an instance of ' . get_class($object);
-        } else {
-            $resolvedType = gettype($object);
-        }
-
-        throw new LogicException(
-            sprintf(
-                'Enum element object in enum %s must be an instance of %s (%s received)',
-                static::class,
-                $class,
-                $resolvedType
-            )
-        );
     }
 }

@@ -23,6 +23,8 @@ use Zlikavac32\Enum\Tests\Fixtures\ValidObjectsEnum;
 use Zlikavac32\Enum\Tests\Fixtures\ValidStringEnum;
 use Zlikavac32\Enum\Tests\Fixtures\WrongClassEnumerationObjectsEnum;
 use Zlikavac32\Enum\Tests\Fixtures\ZeroLengthEnumerationObjectsEnum;
+use function iterator_to_array;
+use function json_encode;
 
 class EnumTest extends TestCase
 {
