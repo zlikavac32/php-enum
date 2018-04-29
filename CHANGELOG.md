@@ -1,5 +1,10 @@
 # PHP-Enum changelog
 
+## 1.1.1 (2018-04-29)
+
+* **[CHANGED]** Optimized functions imports
+* **[CHANGED]** Extracted few private methods into functions
+
 ## 1.1.0 (2018-04-12)
 
 * **[NEW]** Method `final isAnyOf(Enum ...$enums): bool`
