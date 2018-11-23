@@ -10,8 +10,12 @@ use Zlikavac32\Enum\Enum;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-if (!extension_loaded('ds')) {
-    fwrite(STDERR, "You need the ds library to run this example");
+if (
+    !interface_exists(Hashable::class)
+    ||
+    !class_exists(Set::class)
+) {
+    fwrite(STDERR, "You need the ds library to run this example (composer or native version both should work well)");
 
     exit(1);
 }
