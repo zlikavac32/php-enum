@@ -57,7 +57,6 @@ abstract class Enum implements Serializable, JsonSerializable
 
     private function assertValidConstructionContext(): void
     {
-        //Expected usage is new class extends Enum so first parent should be our construction context
         if (isset(self::$enumConstructionContext[get_parent_class($this)])) {
             return ;
         }
@@ -282,7 +281,7 @@ abstract class Enum implements Serializable, JsonSerializable
 
     private static function discoverEnumerationObjectsForClass(string $class)
     {
-        assertEnumClassIsAbstract($class);
+        assertEnumClassAdheresConstraints($class);
 
         /* @var Enum[]|string[] $objectsOrEnumNames */
         $objectsOrEnumNames = static::enumerate();

@@ -14,6 +14,36 @@ use function is_string;
 use function preg_match;
 use function sprintf;
 
+function assertEnumClassAdheresConstraints(string $fqn): void {
+    assertEnumClassIsAbstract($fqn);
+    assertNoParentHasEnumerateMethodForClass($fqn);
+}
+
+function assertNoParentHasEnumerateMethodForClass(string $fqn): void {
+    foreach (class_parents($fqn) as $parent) {
+        $reflectionClass = new ReflectionClass($parent);
+        $reflectionMethod = $reflectionClass->getMethod('enumerate');
+
+        $declaringClass = $reflectionMethod->getDeclaringClass();
+
+        if ($declaringClass->name !== Enum::class) {
+            throw new LogicException(
+                sprintf('Enum %s extends %s which already defines enumerate() method', $fqn, $parent)
+            );
+        }
+
+        if (!$reflectionClass->isAbstract()) {
+            throw new LogicException(
+                sprintf(
+                    'Class %s must be also abstract (since %s extends it)',
+                    $parent,
+                    $fqn
+                )
+            );
+        }
+    }
+}
+
 function assertValidNamePattern(string $name): void
 {
     $pattern = '/^[a-zA-Z_][a-zA-Z_0-9]*$/i';
