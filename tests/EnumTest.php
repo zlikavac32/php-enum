@@ -6,8 +6,12 @@ namespace Zlikavac32\Enum\Tests;
 
 use LogicException;
 use PHPUnit\Framework\TestCase;
+use Zlikavac32\Enum\Tests\Fixtures\AbstractEnumWithoutEnumerate;
 use Zlikavac32\Enum\Tests\Fixtures\DuplicateNameEnum;
 use Zlikavac32\Enum\Tests\Fixtures\EnumThatDependsOnEnum;
+use Zlikavac32\Enum\Tests\Fixtures\EnumThatExtendsNonAbstractEnumWithoutEnumerate;
+use Zlikavac32\Enum\Tests\Fixtures\EnumThatExtendsValidEnum;
+use Zlikavac32\Enum\Tests\Fixtures\ValidEnumWithOneParent;
 use Zlikavac32\Enum\Tests\Fixtures\EnumWithSomeVeryVeryLongNameA;
 use Zlikavac32\Enum\Tests\Fixtures\EnumWithSomeVeryVeryLongNameB;
 use Zlikavac32\Enum\Tests\Fixtures\InvalidAliasNameEnum;
@@ -409,5 +413,34 @@ class EnumTest extends TestCase
         } catch (LogicException $e) {
             $this->fail('Workaround no longer works');
         }
+    }
+
+    /**
+     * @expectedException LogicException
+     * @expectedExceptionMessage Enum Zlikavac32\Enum\Tests\Fixtures\EnumThatExtendsValidEnum extends
+     *                           Zlikavac32\Enum\Tests\Fixtures\ValidStringEnum which already defines enumerate()
+     *                           method
+     */
+    public function testThatNonDefiningEnumClassInChainMustNotDefineEnumerate(): void
+    {
+        EnumThatExtendsValidEnum::ENUM_A();
+    }
+
+    /**
+     * @expectedException LogicException
+     * @expectedExceptionMessage Class Zlikavac32\Enum\Tests\Fixtures\NonAbstractEnumWithoutEnumerate must be also
+     *                           abstract (since
+     *                           Zlikavac32\Enum\Tests\Fixtures\EnumThatExtendsNonAbstractEnumWithoutEnumerate extends
+     *                           it)
+     */
+    public function testThatNonDefiningEnumClassInChainMustBeAbstract(): void
+    {
+        EnumThatExtendsNonAbstractEnumWithoutEnumerate::ENUM_A();
+    }
+
+    public function testThatEnumWithAbstractParentCanBeConstructed(): void
+    {
+        $this->assertTrue(ValidEnumWithOneParent::ENUM_A() instanceof AbstractEnumWithoutEnumerate);
+        $this->assertTrue(ValidEnumWithOneParent::ENUM_A() instanceof ValidEnumWithOneParent);
     }
 }

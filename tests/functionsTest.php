@@ -8,7 +8,11 @@ use LogicException;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use Throwable;
+use function Zlikavac32\Enum\assertNoParentHasEnumerateMethodForClass;
+use Zlikavac32\Enum\Tests\Fixtures\EnumThatExtendsNonAbstractEnumWithoutEnumerate;
+use Zlikavac32\Enum\Tests\Fixtures\EnumThatExtendsValidEnum;
 use Zlikavac32\Enum\Tests\Fixtures\NonAbstractEnum;
+use Zlikavac32\Enum\Tests\Fixtures\ValidEnumWithOneParent;
 use Zlikavac32\Enum\Tests\Fixtures\ValidStringEnum;
 use function sprintf;
 use function Zlikavac32\Enum\assertElementNameIsString;
@@ -144,5 +148,39 @@ class functionsTest extends TestCase
     private function failWithThrowable(Throwable $e): void
     {
         $this->fail(sprintf('No exception was expected but got: %s', $e->getMessage()));
+    }
+
+    /**
+     * @expectedException LogicException
+     * @expectedExceptionMessage Enum Zlikavac32\Enum\Tests\Fixtures\EnumThatExtendsValidEnum extends
+     *                           Zlikavac32\Enum\Tests\Fixtures\ValidStringEnum which already defines enumerate()
+     *                           method
+     */
+    public function testThatExceptionIsThrownWhenParentHasEnumerate(): void
+    {
+        assertNoParentHasEnumerateMethodForClass(EnumThatExtendsValidEnum::class);
+    }
+
+    /**
+     * @expectedException LogicException
+     * @expectedExceptionMessage Class Zlikavac32\Enum\Tests\Fixtures\NonAbstractEnumWithoutEnumerate must be also
+     *                           abstract (since
+     *                           Zlikavac32\Enum\Tests\Fixtures\EnumThatExtendsNonAbstractEnumWithoutEnumerate extends
+     *                           it)
+     */
+    public function testThatExceptionIsThrownWhenParentIsNotAbstract(): void
+    {
+        assertNoParentHasEnumerateMethodForClass(EnumThatExtendsNonAbstractEnumWithoutEnumerate::class);
+    }
+
+    public function testThatGoodEnumWithParentPasses(): void
+    {
+        try {
+            assertNoParentHasEnumerateMethodForClass(ValidEnumWithOneParent::class);
+
+            $this->assertTrue(true);
+        } catch (Throwable $e) {
+            $this->failWithThrowable($e);
+        }
     }
 }

@@ -79,7 +79,7 @@ This class also exposes few public static and non static methods which are liste
 - `final ordinal(): int` - returns ordinal number of that enum object (it's position in the collection) starting from 0
 - `final isAnyOf(Enum ...$enums): bool` - returns `true` if enum object is in the `$enums` list, `false` otherwise
 
-Other methods serve as a way to restrict inconsistent behaviour, for example, to have to distinct objects of the same enum name. Check the [Restrictions](#restrictions) section for more info. 
+Other methods serve as a way to restrict inconsistent behaviour, for example, to have two distinct objects of the same enum name. Check the [Restrictions](#restrictions) section for more info.
 
 ## Usage
 
@@ -111,6 +111,12 @@ Every call to the same enum will return that same object so you can safely use i
 
 Since enums are created using static method, it's recommended to type-hint your class with existing static methods using `@method static YourEnumClass YOUR_ENUM_NAME`.
 
+### More than one parent
+
+It is possible to have more than one class between defining enum class and `\Zlikavac32\Enum\Enum` class with a few restrictions (check [Restrictions regarding inheritance](#restrictions-regarding-inheritance)).
+
+To see an example, open [examples/hashable_enum.php](examples/hashable_enum.php).
+
 ## Restrictions
 
 To mitigate wrong usage and sleepless nights in debugging, some restrictions are placed. They exist not because I want them to, but to serve as an early warning that something could go wrong in the long run. If you try really hard, you can still avoid them but then what's the purpose of this library to you?
@@ -122,6 +128,12 @@ In order to try to avoid misuse as much as possible, you can not serialize/unser
 ### No cloning
 
 The reasoning behind this is the same as with serialisation.
+
+### Restrictions regarding inheritance
+
+- no class in between can define `enumerate` method
+- every class in the chain must be defined as abstract
+- defining enum class must be first parent for the concrete enum object
 
 ### Reserved methods
 
