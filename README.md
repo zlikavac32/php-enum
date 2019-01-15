@@ -111,6 +111,27 @@ Every call to the same enum will return that same object so you can safely use i
 
 Since enums are created using static method, it's recommended to type-hint your class with existing static methods using `@method static YourEnumClass YOUR_ENUM_NAME`.
 
+It's also possible to manually instantiate enum objects and return them as a map (instead of a list of names).
+
+```
+/**
+ * @method static YesNo YES
+ * @method static YesNo NO
+ */
+abstract class YesNo extends \Zlikavac32\Enum\Enum
+{
+    protected static function enumerate(): array
+    {
+        return [
+            'YES' => new class extends YesNo {},
+            'NO' => new class extends YesNo {}
+        ];
+    }
+}
+```
+
+**Due to the [PHP bug #73816](https://bugs.php.net/bug.php?id=73816), it can happen that PHP returns wrong object which in turn throws `It seems you tried to manually create enum outside of ...` exception. Because of that, this is the recommended way.**
+
 ### More than one parent
 
 It is possible to have more than one class between defining enum class and `\Zlikavac32\Enum\Enum` class with a few restrictions (check [Restrictions regarding inheritance](#restrictions-regarding-inheritance)).
