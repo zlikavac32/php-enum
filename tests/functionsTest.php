@@ -36,7 +36,7 @@ class functionsTest extends TestCase
 
     /**
      * @expectedException LogicException
-     * @expectedExceptionMessage Element name "FO*BAR" does not match pattern /^[a-zA-Z_][a-zA-Z_0-9]*$/i
+     * @expectedExceptionMessage Element name "FO*BAR" does not match pattern /^[a-zA-Z_][a-zA-Z_0-9]*$/
      */
     public function testThatExceptionIsThrownOnInvalidName(): void
     {

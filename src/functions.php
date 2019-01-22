@@ -46,7 +46,7 @@ function assertNoParentHasEnumerateMethodForClass(string $fqn): void {
 
 function assertValidNamePattern(string $name): void
 {
-    $pattern = '/^[a-zA-Z_][a-zA-Z_0-9]*$/i';
+    $pattern = '/^[a-zA-Z_][a-zA-Z_0-9]*$/';
 
     if (preg_match($pattern, $name)) {
         return ;

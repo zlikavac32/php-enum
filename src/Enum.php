@@ -291,7 +291,7 @@ abstract class Enum implements Serializable, JsonSerializable
             throw new LogicException(sprintf('Enum %s must define at least one element', $class));
         }
 
-        if (self::collectionRepresentsSimpleEnumeration($objectsOrEnumNames)) {
+        if (self::collectionShouldRepresentSimpleEnumeration($objectsOrEnumNames)) {
             return self::createDynamicEnumElementObjects($class, $objectsOrEnumNames);
         }
 
@@ -310,7 +310,7 @@ abstract class Enum implements Serializable, JsonSerializable
         }
     }
 
-    private static function collectionRepresentsSimpleEnumeration(array $objectsOrEnumNames): bool
+    private static function collectionShouldRepresentSimpleEnumeration(array $objectsOrEnumNames): bool
     {
         reset($objectsOrEnumNames);
         $key = key($objectsOrEnumNames);
