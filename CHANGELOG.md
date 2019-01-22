@@ -1,5 +1,9 @@
 # PHP-Enum changelog
 
+## Unreleased
+
+* **[FIXED]** Avoid issue with [https://bugs.php.net/bug.php?id=73816](https://bugs.php.net/bug.php?id=73816)
+
 ## 1.2.0 (2018-11-23)
 
 * **[CHANGED]** Enum class no longer must be immediate parent

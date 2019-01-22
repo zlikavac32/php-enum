@@ -130,8 +130,6 @@ abstract class YesNo extends \Zlikavac32\Enum\Enum
 }
 ```
 
-**Due to the [PHP bug #73816](https://bugs.php.net/bug.php?id=73816), it can happen that PHP returns wrong object which in turn throws `It seems you tried to manually create enum outside of ...` exception. Because of that, this is the recommended way.**
-
 ### More than one parent
 
 It is possible to have more than one class between defining enum class and `\Zlikavac32\Enum\Enum` class with a few restrictions (check [Restrictions regarding inheritance](#restrictions-regarding-inheritance)).

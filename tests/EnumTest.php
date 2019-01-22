@@ -395,7 +395,7 @@ class EnumTest extends TestCase
 
     /**
      * @expectedException LogicException
-     * @expectedExceptionMessage Duplicate element exists in enum Zlikavac32\Enum\Tests\Fixtures\DuplicateNameEnum
+     * @expectedExceptionMessage Duplicate element ENUM_A exists in enum Zlikavac32\Enum\Tests\Fixtures\DuplicateNameEnum
      */
     public function testThatDuplicateElementThrowsException(): void
     {

@@ -19,7 +19,6 @@ use function is_int;
 use function key;
 use function reset;
 use function sprintf;
-use function str_repeat;
 
 abstract class Enum implements Serializable, JsonSerializable
 {
@@ -41,13 +40,6 @@ abstract class Enum implements Serializable, JsonSerializable
     private $name;
 
     private $correctlyInitialized = false;
-
-    /**
-     * Number of eval-s executed so far (workaround for PHP bug #73816)
-     *
-     * @var int
-     */
-    private static $evalLine = 0;
 
     public function __construct()
     {
@@ -328,22 +320,29 @@ abstract class Enum implements Serializable, JsonSerializable
 
     private static function createDynamicEnumElementObjects(string $class, array $enumNames): array
     {
-        $evalString = str_repeat("\n", self::$evalLine++) . sprintf('return new class extends %s {};', $class);
+        $defineClasses = '';
+        $createObjects = '';
 
-        $objects = [];
-        //We don't care about the indexes whether they are strings or are they out of order
-        //That may change in the future though
-        foreach ($enumNames as $elementName) {
-            assertElementNameIsString($class, $elementName);
-            assertValidNamePattern($elementName);
-            //eval is in a controlled environment but I'm glad that you're careful
-            $objects[$elementName] = eval($evalString);
+        $usedNames = [];
+
+        foreach ($enumNames as $enumName) {
+            assertElementNameIsString($class, $enumName);
+            assertValidNamePattern($enumName);
+
+            if (isset($usedNames[$enumName])) {
+                throw new LogicException(sprintf('Duplicate element %s exists in enum %s', $enumName, $class));
+            }
+
+            $proxyClassName = 'Proxy_' . sha1($enumName . $class);
+
+            $defineClasses .= sprintf('class %s extends \\%s {};', $proxyClassName, $class);
+            $createObjects .= sprintf('"%s" => new %s(),', $enumName, $proxyClassName);
+
+            $usedNames[$enumName] = true;
         }
 
-        if (count($enumNames) === count($objects)) {
-            return $objects;
-        }
+        $evalString = sprintf('namespace Zlikavac32\\Dynamic\\Proxy; %s return [%s];', $defineClasses, $createObjects);
 
-        throw new LogicException(sprintf('Duplicate element exists in enum %s', $class));
+        return eval($evalString);
     }
 }
