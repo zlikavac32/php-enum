@@ -1,6 +1,6 @@
 # PHP-Enum changelog
 
-## Unreleased
+## 1.3.0 (2019-01-23)
 
 * **[FIXED]** Avoid issue with [https://bugs.php.net/bug.php?id=73816](https://bugs.php.net/bug.php?id=73816)
 
