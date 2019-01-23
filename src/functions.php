@@ -178,10 +178,10 @@ function assertValidEnumElementObjectType(string $class, $object, string $enumCl
         return;
     }
 
-    if (is_object($object)) {
+    $resolvedType = gettype($object);
+
+    if ('object' === $resolvedType) {
         $resolvedType = 'an instance of ' . get_class($object);
-    } else {
-        $resolvedType = gettype($object);
     }
 
     throw new LogicException(
