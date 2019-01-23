@@ -11,14 +11,50 @@ use function get_class;
 use function gettype;
 use function is_object;
 use function is_string;
+use function is_subclass_of;
 use function preg_match;
 use function sprintf;
 
+/**
+ * @param string $fqn
+ * @throws LogicException If value in $fqn is not a class extending Zlikavac32\Enum\Enum
+ */
+function assertFqnIsEnumClass(string $fqn): void
+{
+    if (is_subclass_of($fqn, Enum::class)) {
+        return ;
+    }
+
+    throw new LogicException(sprintf('%s does not have %s as it\'s parent', $fqn, Enum::class));
+}
+
+/**
+ * Checks for library specific constraints put on an enum class.
+ *
+ * Currently they are:
+ *   - enum class must be abstract
+ *   - no class between enum class and Zlikavac32\Enum\Enum (both exclusive) can implement enumerate() method
+ *   - every class in the chain must be abstract
+ *
+ * @param string $fqn
+ * @throws ReflectionException If something went wrong in reflection API
+ * @throws LogicException If some condition is not fulfilled
+ */
 function assertEnumClassAdheresConstraints(string $fqn): void {
     assertEnumClassIsAbstract($fqn);
     assertNoParentHasEnumerateMethodForClass($fqn);
 }
 
+/**
+ * Functions asserts that parents (except for Zlikavac32\Enum\Enum) are abstract and do not define enumerate() method.
+ *
+ * @param string $fqn
+ *
+ * @throws ReflectionException If something went wrong in reflection API
+ * @throws LogicException If one of parents is not abstract
+ * @throws LogicException If one of parents defines enumerate() method
+ */
+// @todo: change name of this to something more meaningful
 function assertNoParentHasEnumerateMethodForClass(string $fqn): void {
     foreach (class_parents($fqn) as $parent) {
         $reflectionClass = new ReflectionClass($parent);
@@ -44,6 +80,11 @@ function assertNoParentHasEnumerateMethodForClass(string $fqn): void {
     }
 }
 
+/**
+ * @param string $name
+ *
+ * @throws LogicException If pattern "/^[a-zA-Z_][a-zA-Z_0-9]*$/" is not satisfied
+ */
 function assertValidNamePattern(string $name): void
 {
     $pattern = '/^[a-zA-Z_][a-zA-Z_0-9]*$/';
@@ -56,10 +97,14 @@ function assertValidNamePattern(string $name): void
 }
 
 /**
+ * Checks that enum class is abstract.
+ *
  * @param string $fqn
  *
- * @throws ReflectionException
+ * @throws ReflectionException If something went wrong in reflection API
+ * @throws LogicException If enum class is not abstract
  */
+// @todo: Remove this, and merge with assertNoParentHasEnumerateMethodForClass()
 function assertEnumClassIsAbstract(string $fqn): void
 {
     if ((new ReflectionClass($fqn))->isAbstract()) {
@@ -69,6 +114,20 @@ function assertEnumClassIsAbstract(string $fqn): void
     throw new LogicException(sprintf('Enum %s must be declared as abstract', $fqn));
 }
 
+/**
+ * Checks whether a collection of enum objects represents valid collection for enum class in $class. Parameter
+ * $enumClassFqn is same as $class and will be removed later.
+ *
+ * Rules that must be satisfied:
+ *   - element name must be valid string
+ *   - enum object must be instance of $class
+ *
+ * @param string $class
+ * @param array $enumCollection
+ * @param string $enumClassFqn
+ *
+ * @throws LogicException If some condition is not fulfilled
+ */
 function assertValidEnumCollection(string $class, array $enumCollection, string $enumClassFqn): void
 {
     foreach ($enumCollection as $elementName => $object) {
@@ -78,6 +137,14 @@ function assertValidEnumCollection(string $class, array $enumCollection, string 
     }
 }
 
+/**
+ * Asserts that value in $name is string.
+ *
+ * @param string $class
+ * @param $name
+ *
+ * @throws LogicException If value in $name is not string
+ */
 function assertElementNameIsString(string $class, $name): void
 {
     if (is_string($name)) {
@@ -95,6 +162,16 @@ function assertElementNameIsString(string $class, $name): void
     );
 }
 
+/**
+ * Asserts that $object is instance off $class. Parameter $enumClassFqn must (although is not enforced currently) have
+ * same value as $class. It will be removed in the future.
+ *
+ * @param string $class
+ * @param $object
+ * @param string $enumClassFqn
+ *
+ * @throws LogicException If $object is not an instance of $class
+ */
 function assertValidEnumElementObjectType(string $class, $object, string $enumClassFqn): void
 {
     if ($object instanceof $class) {

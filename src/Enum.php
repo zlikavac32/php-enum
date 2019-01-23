@@ -295,7 +295,7 @@ abstract class Enum implements Serializable, JsonSerializable
             return self::createDynamicEnumElementObjects($class, $objectsOrEnumNames);
         }
 
-        assertValidEnumCollection($class, $objectsOrEnumNames, static::class);
+        assertValidEnumCollection($class, $objectsOrEnumNames, $class);
 
         return $objectsOrEnumNames;
     }

@@ -8,6 +8,7 @@ use LogicException;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use Throwable;
+use function Zlikavac32\Enum\assertFqnIsEnumClass;
 use function Zlikavac32\Enum\assertNoParentHasEnumerateMethodForClass;
 use Zlikavac32\Enum\Tests\Fixtures\EnumThatExtendsNonAbstractEnumWithoutEnumerate;
 use Zlikavac32\Enum\Tests\Fixtures\EnumThatExtendsValidEnum;
@@ -23,6 +24,26 @@ use function Zlikavac32\Enum\assertValidNamePattern;
 
 class functionsTest extends TestCase
 {
+    public function testThatFqnRepresentingValidEnumClassPassesAssert(): void
+    {
+        try {
+            assertFqnIsEnumClass(ValidStringEnum::class);
+
+            $this->assertTrue(true);
+        } catch (Throwable $e) {
+            $this->failWithThrowable($e);
+        }
+    }
+
+    /**
+     * @expectedException LogicException
+     * @expectedExceptionMessage stdClass does not have Zlikavac32\Enum\Enum as it's parent
+     */
+    public function testThatFqnNotRepresentingValidEnumClassDoesNotPassAssert(): void
+    {
+        assertFqnIsEnumClass(stdClass::class);
+    }
+
     public function testThatNoExceptionIsThrownOnValidName(): void
     {
         try {

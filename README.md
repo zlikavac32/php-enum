@@ -15,6 +15,7 @@ This library aims to make your everyday enumeration use in PHP easier.
 1. [API](#api)
     1. [Class methods](#class-methods)
     1. [Object methods](#object-methods)
+    1. [Assert functions](#assert-functions)
 1. [Usage](#usage)
 1. [Restrictions](#restrictions)
     1. [No serialisation](#no-serialisation)
@@ -80,6 +81,19 @@ This class also exposes few public static and non static methods which are liste
 - `final isAnyOf(Enum ...$enums): bool` - returns `true` if enum object is in the `$enums` list, `false` otherwise
 
 Other methods serve as a way to restrict inconsistent behaviour, for example, to have two distinct objects of the same enum name. Check the [Restrictions](#restrictions) section for more info.
+
+### Assert functions
+
+In `src/functions.php` are some helper function that could help you asserting certain input. Every function throws `\LogicException` on failed assertion. You can check the source for documentation, here is just a list of them:
+
+- `assertFqnIsEnumClass(string $fqn): void`
+- `assertEnumClassAdheresConstraints(string $fqn): void`
+- `assertNoParentHasEnumerateMethodForClass(string $fqn): void`
+- `assertValidNamePattern(string $name): void`
+- `assertEnumClassIsAbstract(string $fqn): void`
+- `assertValidEnumCollection(string $class, array $enumCollection, string $enumClassFqn): void`
+- `assertElementNameIsString(string $class, $name): void`
+- `assertValidEnumElementObjectType(string $class, $object, string $enumClassFqn): void`
 
 ## Usage
 
