@@ -70,21 +70,19 @@ class EnumTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException LogicException
-     * @expectedExceptionMessage You can not retrieve ordinal within enumerate()
-     */
     public function testThatOrdinalThrowExceptionUntilValueIsDefined(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('You can not retrieve ordinal within enumerate()');
+
         OrdinalWithinEnumerateEnum::ENUM_A();
     }
 
-    /**
-     * @expectedException LogicException
-     * @expectedExceptionMessage You can not retrieve name within enumerate()
-     */
     public function testThatNameThrowExceptionUntilValueIsDefined(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('You can not retrieve name within enumerate()');
+
         NameWithinEnumerateEnum::ENUM_A();
     }
 
@@ -110,12 +108,11 @@ class EnumTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException LogicException
-     * @expectedExceptionMessage Cloning enum element is not allowed
-     */
     public function testThatCloneIsNotSupported(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Cloning enum element is not allowed');
+
         clone ValidObjectsEnum::ENUM_A();
     }
 
@@ -124,12 +121,11 @@ class EnumTest extends TestCase
         $this->assertSame(ValidObjectsEnum::ENUM_A(), ValidObjectsEnum::valueOf('ENUM_A'));
     }
 
-    /**
-     * @expectedException \Zlikavac32\Enum\EnumNotFoundException
-     * @expectedExceptionMessage Enum element I_DONT_EXIST missing in Zlikavac32\Enum\Tests\Fixtures\ValidObjectsEnum
-     */
     public function testThatValueOfThrowsExceptionWhenEnumDoesNotExist(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Enum element I_DONT_EXIST missing in Zlikavac32\Enum\Tests\Fixtures\ValidObjectsEnum');
+
         ValidObjectsEnum::valueOf('I_DONT_EXIST');
     }
 
@@ -187,218 +183,179 @@ class EnumTest extends TestCase
         $this->assertSame(ValidStringEnum::ENUM_A(), EnumThatDependsOnEnum::ENUM_A()->enum());
     }
 
-    /**
-     * @expectedException LogicException
-     * @expectedExceptionMessage No argument must be provided when calling
-     *     Zlikavac32\Enum\Tests\Fixtures\ValidObjectsEnum::ENUM_B
-     */
     public function testThatEnumObjectCallsMustBeWithoutArguments(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('No argument must be provided when calling Zlikavac32\Enum\Tests\Fixtures\ValidObjectsEnum::ENUM_B');
+
         ValidObjectsEnum::ENUM_B(0);
     }
 
-    /**
-     * @expectedException LogicException
-     * @expectedExceptionMessage Enum Zlikavac32\Enum\Tests\Fixtures\ZeroLengthEnumerationObjectsEnum must define at
-     *     least one element
-     */
     public function testThatZeroLengthEnumerationObjectConfigurationThrowsException(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Enum Zlikavac32\Enum\Tests\Fixtures\ZeroLengthEnumerationObjectsEnum must define at least one element');
+
         ZeroLengthEnumerationObjectsEnum::iterator();
     }
 
-    /**
-     * @expectedException LogicException
-     * @expectedExceptionMessage Enum Zlikavac32\Enum\Tests\Fixtures\NonAbstractEnum must be declared as abstract
-     */
     public function testThatNonAbstractEnumThrowsException(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Enum Zlikavac32\Enum\Tests\Fixtures\NonAbstractEnum must be declared as abstract');
+
         NonAbstractEnum::ENUM_A();
     }
 
-    /**
-     * @expectedException LogicException
-     * @expectedExceptionMessage Element name "INVA LID" does not match pattern /^[a-zA-Z_][a-zA-Z_0-9]*$/
-     */
     public function testThatInvalidAliasNameThrowsException(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Element name "INVA LID" does not match pattern /^[a-zA-Z_][a-zA-Z_0-9]*$/');
+
         InvalidAliasNameEnum::values();
     }
 
-    /**
-     * @expectedException LogicException
-     * @expectedExceptionMessage You must provide protected static function enumerate(): array method in
-     *     your enum class Zlikavac32\Enum\Tests\Fixtures\DefaultCreateEnumerationObjects
-     */
     public function testThatDefaultEnumerationObjectConfigurationThrowsException(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('You must provide protected static function enumerate(): array method in your enum class Zlikavac32\Enum\Tests\Fixtures\NoEnumerateMethodEnum');
+
         NoEnumerateMethodEnum::iterator();
     }
 
-    /**
-     * @expectedException \Zlikavac32\Enum\EnumNotFoundException
-     * @expectedExceptionMessage Enum element I_DONT_EXIST missing in Zlikavac32\Enum\Tests\Fixtures\ValidObjectsEnum
-     */
     public function testThatAccessingNonExistingEnumThrowsException(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Enum element I_DONT_EXIST missing in Zlikavac32\Enum\Tests\Fixtures\ValidObjectsEnum');
+
         ValidObjectsEnum::I_DONT_EXIST();
     }
 
-    /**
-     * @expectedException LogicException
-     * @expectedExceptionMessage Element name 0 in enum
-     *     Zlikavac32\Enum\Tests\Fixtures\InvalidObjectAliasEnumerationObjectsEnum is not valid
-     */
     public function testThatInvalidObjectAliasThrowsException(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Element name 0 in enum Zlikavac32\Enum\Tests\Fixtures\InvalidObjectAliasEnumerationObjectsEnum is not valid');
+
         InvalidObjectAliasEnumerationObjectsEnum::iterator();
     }
 
-    /**
-     * @expectedException LogicException
-     * @expectedExceptionMessage Element name (object instance of
-     *     Zlikavac32\Enum\Tests\Fixtures\InvalidNumberAliasEnumerationObjectsDummyEnum) in enum
-     *     Zlikavac32\Enum\Tests\Fixtures\InvalidNumberAliasEnumerationObjectsEnum is not valid
-     */
     public function testThatInvalidNumberAliasThrowsException(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Element name (object instance of Zlikavac32\Enum\Tests\Fixtures\InvalidNumberAliasEnumerationObjectsDummyEnum) in enum Zlikavac32\Enum\Tests\Fixtures\InvalidNumberAliasEnumerationObjectsEnum is not valid');
+
         InvalidNumberAliasEnumerationObjectsEnum::iterator();
     }
 
-    /**
-     * @expectedException LogicException
-     * @expectedExceptionMessage Enum element object in enum
-     *     Zlikavac32\Enum\Tests\Fixtures\WrongClassEnumerationObjectsEnum must be an instance of
-     *     Zlikavac32\Enum\Tests\Fixtures\WrongClassEnumerationObjectsEnum (an instance of
-     *     Zlikavac32\Enum\Tests\Fixtures\AWrongClassEnumerationObjectsDummyEnum received)
-     */
     public function testThatWrongEnumInstanceThrowsException(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Enum element object in enum Zlikavac32\Enum\Tests\Fixtures\WrongClassEnumerationObjectsEnum must be an instance of Zlikavac32\Enum\Tests\Fixtures\WrongClassEnumerationObjectsEnum (an instance of Zlikavac32\Enum\Tests\Fixtures\AWrongClassEnumerationObjectsDummyEnum received)');
+
         WrongClassEnumerationObjectsEnum::iterator();
     }
 
-    /**
-     * @expectedException LogicException
-     * @expectedExceptionMessage Enum element object in enum
-     *     Zlikavac32\Enum\Tests\Fixtures\NonObjectEnumerationObjectsEnum must be an instance of
-     *     Zlikavac32\Enum\Tests\Fixtures\NonObjectEnumerationObjectsEnum (integer received)
-     */
     public function testThatObjectEnumThrowsException(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Enum element object in enum Zlikavac32\Enum\Tests\Fixtures\NonObjectEnumerationObjectsEnum must be an instance of Zlikavac32\Enum\Tests\Fixtures\NonObjectEnumerationObjectsEnum (integer received)');
+
         NonObjectEnumerationObjectsEnum::iterator();
     }
 
-    /**
-     * @expectedException LogicException
-     * @expectedExceptionMessage Serialization/deserialization of enum element is not allowed
-     */
     public function testThatSetStateThrowsException(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Serialization/deserialization of enum element is not allowed');
+
         ValidStringEnum::__set_state();
     }
 
-    /**
-     * @expectedException LogicException
-     * @expectedExceptionMessage Serialization/deserialization of enum element is not allowed
-     */
     public function testThatSleepThrowsException(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Serialization/deserialization of enum element is not allowed');
+
         ValidStringEnum::ENUM_A()->__sleep();
     }
 
-    /**
-     * @expectedException LogicException
-     * @expectedExceptionMessage Serialization/deserialization of enum element is not allowed
-     */
     public function testThatWakeupThrowsException(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Serialization/deserialization of enum element is not allowed');
+
         ValidStringEnum::ENUM_A()->__wakeup();
     }
 
-    /**
-     * @expectedException LogicException
-     * @expectedExceptionMessage Serialization/deserialization of enum element is not allowed
-     */
     public function testThatSerializeThrowsException(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Serialization/deserialization of enum element is not allowed');
+
         ValidStringEnum::ENUM_A()->serialize();
     }
 
-    /**
-     * @expectedException LogicException
-     * @expectedExceptionMessage Serialization/deserialization of enum element is not allowed
-     */
     public function testThatUnserializeThrowsException(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Serialization/deserialization of enum element is not allowed');
+
         ValidStringEnum::ENUM_A()->unserialize('');
     }
 
-    /**
-     * @expectedException LogicException
-     * @expectedExceptionMessage It seems that enum is not correctly initialized. Did you forget to call
-     *     parent::__construct() in enum Zlikavac32\Enum\Tests\Fixtures\InvalidOverrideConstructorEnum?
-     */
     public function testThatConstructMustBeCalledForName(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('It seems that enum is not correctly initialized. Did you forget to call parent::__construct() in enum Zlikavac32\Enum\Tests\Fixtures\InvalidOverrideConstructorEnum?');
+
         (new InvalidOverrideConstructorEnum())->name();
     }
 
-    /**
-     * @expectedException LogicException
-     * @expectedExceptionMessage It seems that enum is not correctly initialized. Did you forget to call
-     *     parent::__construct() in enum Zlikavac32\Enum\Tests\Fixtures\InvalidOverrideConstructorEnum?
-     */
     public function testThatConstructMustBeCalledForOrdinal(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('It seems that enum is not correctly initialized. Did you forget to call parent::__construct() in enum Zlikavac32\Enum\Tests\Fixtures\InvalidOverrideConstructorEnum?');
+
         (new InvalidOverrideConstructorEnum())->ordinal();
     }
 
-    /**
-     * @expectedException LogicException
-     * @expectedExceptionMessage It seems that enum is not correctly initialized. Did you forget to call
-     *     parent::__construct() in enum Zlikavac32\Enum\Tests\Fixtures\InvalidOverrideConstructorEnum?
-     */
     public function testThatConstructMustBeCalledForIsAnyOf(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('It seems that enum is not correctly initialized. Did you forget to call parent::__construct() in enum Zlikavac32\Enum\Tests\Fixtures\InvalidOverrideConstructorEnum?');
+
         (new InvalidOverrideConstructorEnum())->isAnyOf();
     }
 
-    /**
-     * @expectedException LogicException
-     * @expectedExceptionMessage It seems you tried to manually create enum outside of enumerate() method for enum
-     *     Zlikavac32\Enum\Tests\Fixtures\NonAbstractEnum
-     */
     public function testThatNameThrowsExceptionWhenNotConstructedCorrectly(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('It seems you tried to manually create enum outside of enumerate() method for enum Zlikavac32\Enum\Tests\Fixtures\NonAbstractEnum');
+
         (new NonAbstractEnum())->name();
     }
 
-    /**
-     * @expectedException LogicException
-     * @expectedExceptionMessage It seems you tried to manually create enum outside of enumerate() method for enum
-     *     Zlikavac32\Enum\Tests\Fixtures\NonAbstractEnum
-     */
     public function testThatOrdinalThrowsExceptionWhenNotConstructedCorrectly(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('It seems you tried to manually create enum outside of enumerate() method for enum Zlikavac32\Enum\Tests\Fixtures\NonAbstractEnum');
+
         (new NonAbstractEnum())->ordinal();
     }
 
-    /**
-     * @expectedException LogicException
-     * @expectedExceptionMessage It seems you tried to manually create enum outside of enumerate() method for enum
-     *     Zlikavac32\Enum\Tests\Fixtures\NonAbstractEnum
-     */
     public function testThatToStringThrowsExceptionWhenNotConstructedCorrectly(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('It seems you tried to manually create enum outside of enumerate() method for enum Zlikavac32\Enum\Tests\Fixtures\NonAbstractEnum');
+
         (new NonAbstractEnum())->__toString();
     }
 
-    /**
-     * @expectedException LogicException
-     * @expectedExceptionMessage Duplicate element ENUM_A exists in enum Zlikavac32\Enum\Tests\Fixtures\DuplicateNameEnum
-     */
     public function testThatDuplicateElementThrowsException(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Duplicate element ENUM_A exists in enum Zlikavac32\Enum\Tests\Fixtures\DuplicateNameEnum');
+
         DuplicateNameEnum::ENUM_A();
     }
 
@@ -415,26 +372,19 @@ class EnumTest extends TestCase
         }
     }
 
-    /**
-     * @expectedException LogicException
-     * @expectedExceptionMessage Enum Zlikavac32\Enum\Tests\Fixtures\EnumThatExtendsValidEnum extends
-     *                           Zlikavac32\Enum\Tests\Fixtures\ValidStringEnum which already defines enumerate()
-     *                           method
-     */
     public function testThatNonDefiningEnumClassInChainMustNotDefineEnumerate(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Enum Zlikavac32\Enum\Tests\Fixtures\EnumThatExtendsValidEnum extends Zlikavac32\Enum\Tests\Fixtures\ValidStringEnum which already defines enumerate() method');
+
         EnumThatExtendsValidEnum::ENUM_A();
     }
 
-    /**
-     * @expectedException LogicException
-     * @expectedExceptionMessage Class Zlikavac32\Enum\Tests\Fixtures\NonAbstractEnumWithoutEnumerate must be also
-     *                           abstract (since
-     *                           Zlikavac32\Enum\Tests\Fixtures\EnumThatExtendsNonAbstractEnumWithoutEnumerate extends
-     *                           it)
-     */
     public function testThatNonDefiningEnumClassInChainMustBeAbstract(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Class Zlikavac32\Enum\Tests\Fixtures\NonAbstractEnumWithoutEnumerate must be also abstract (since Zlikavac32\Enum\Tests\Fixtures\EnumThatExtendsNonAbstractEnumWithoutEnumerate extends it)');
+
         EnumThatExtendsNonAbstractEnumWithoutEnumerate::ENUM_A();
     }
 
