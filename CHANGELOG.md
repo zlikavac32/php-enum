@@ -1,5 +1,9 @@
 # PHP-Enum changelog
 
+## 1.4.0 (2019-03-22)
+
+* **[REMOVED]** PHP 7.1 support
+
 ## 1.3.0 (2019-01-23)
 
 * **[FIXED]** Avoid issue with [https://bugs.php.net/bug.php?id=73816](https://bugs.php.net/bug.php?id=73816)
