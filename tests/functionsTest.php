@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 use Throwable;
 use Zlikavac32\Enum\Tests\Fixtures\EnumThatExtendsNonAbstractEnumWithoutEnumerate;
-use Zlikavac32\Enum\Tests\Fixtures\EnumThatExtendsValidEnum;
+use Zlikavac32\Enum\Tests\Fixtures\EnumThatExtendsValidObjectsEnum;
 use Zlikavac32\Enum\Tests\Fixtures\NonAbstractEnum;
 use Zlikavac32\Enum\Tests\Fixtures\ValidEnumWithOneParent;
 use Zlikavac32\Enum\Tests\Fixtures\ValidStringEnum;
@@ -166,9 +166,17 @@ class functionsTest extends TestCase
     public function testThatExceptionIsThrownWhenParentHasEnumerate(): void
     {
         $this->expectException(LogicException::class);
-        $this->expectExceptionMessage('Enum Zlikavac32\Enum\Tests\Fixtures\EnumThatExtendsValidEnum extends Zlikavac32\Enum\Tests\Fixtures\ValidStringEnum which already defines enumerate() method');
+        $this->expectExceptionMessage('Enum Zlikavac32\Enum\Tests\Fixtures\EnumThatExtendsValidObjectsEnum extends Zlikavac32\Enum\Tests\Fixtures\ValidObjectsEnum which already defines enumerate() method');
 
-        assertNoParentHasEnumerateMethodForClass(EnumThatExtendsValidEnum::class);
+        assertNoParentHasEnumerateMethodForClass(EnumThatExtendsValidObjectsEnum::class);
+    }
+
+    public function testThatExceptionIsThrownWhenParentHasPHPDoc(): void
+    {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Enum Zlikavac32\Enum\Tests\Fixtures\EnumThatExtendsValidObjectsEnum extends Zlikavac32\Enum\Tests\Fixtures\ValidObjectsEnum which already defines enumerate() method');
+
+        assertNoParentHasEnumerateMethodForClass(EnumThatExtendsValidObjectsEnum::class);
     }
 
     public function testThatExceptionIsThrownWhenParentIsNotAbstract(): void

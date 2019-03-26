@@ -18,12 +18,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
  */
 abstract class YesNo extends Enum
 {
-    protected static function enumerate(): array
-    {
-        return [
-            'YES', 'NO'
-        ];
-    }
+
 }
 
 //We can type-hint our enum

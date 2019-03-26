@@ -9,15 +9,13 @@ use InvalidArgumentException;
 use Iterator;
 use JsonSerializable;
 use LogicException;
+use ReflectionClass;
 use Serializable;
 use Throwable;
 use function array_values;
 use function count;
 use function get_class;
 use function get_parent_class;
-use function is_int;
-use function key;
-use function reset;
 use function sprintf;
 
 abstract class Enum implements Serializable, JsonSerializable
@@ -236,12 +234,7 @@ abstract class Enum implements Serializable, JsonSerializable
 
     protected static function enumerate(): array
     {
-        throw new LogicException(
-            sprintf(
-                'You must provide protected static function enumerate(): array method in your enum class %s',
-                static::class
-            )
-        );
+        return [];
     }
 
     /**
@@ -275,29 +268,71 @@ abstract class Enum implements Serializable, JsonSerializable
     {
         assertEnumClassAdheresConstraints($class);
 
-        /* @var Enum[]|string[] $objectsOrEnumNames */
-        $objectsOrEnumNames = static::enumerate();
+        $enumNames = self::resolveMethodsFromDocblock($class);
 
-        $objects = self::normalizeElementsArray($class, $objectsOrEnumNames);
+        /* @var Enum[] $enumObjects */
+        $enumObjects = static::enumerate();
+
+        $objects = self::normalizeElementsArray($class, $enumNames, $enumObjects);
 
         self::populateEnumObjectProperties($objects);
 
         return $objects;
     }
 
-    private static function normalizeElementsArray(string $class, array $objectsOrEnumNames): array
+    private static function resolveMethodsFromDocblock(string $class): array
     {
-        if (count($objectsOrEnumNames) === 0) {
+        $docBlock = (new ReflectionClass($class))->getDocComment();
+
+        if (!$docBlock) {
+            throw new LogicException(
+                sprintf(
+                    'You must provide PHPDoc for static methods in your enum class %s',
+                    static::class
+                )
+            );
+        }
+
+        $regex = '/@method\s+static\s+[^\s]+\s+(.+)\s*(?:\(\))?/';
+
+        if (!preg_match_all($regex, $docBlock, $matches, PREG_SET_ORDER)) {
             throw new LogicException(sprintf('Enum %s must define at least one element', $class));
         }
 
-        if (self::collectionShouldRepresentSimpleEnumeration($objectsOrEnumNames)) {
-            return self::createDynamicEnumElementObjects($class, $objectsOrEnumNames);
+        $enumNames = [];
+
+        foreach ($matches as $match) {
+            assertValidNamePattern($match[1]);
+
+            $enumNames[] = $match[1];
         }
 
-        assertValidEnumCollection($class, $objectsOrEnumNames, $class);
+        return $enumNames;
+    }
 
-        return $objectsOrEnumNames;
+    private static function normalizeElementsArray(string $class, array $enumNames, array $enumObjects): array
+    {
+        if (count($enumObjects) === 0) {
+            return self::createDynamicEnumElementObjects($class, $enumNames);
+        }
+
+        assertValidEnumCollection($class, $enumObjects, $class);
+
+        $enumeratedEnumNames = array_keys($enumObjects);
+
+        $extraEnumeratedKeys = array_diff($enumeratedEnumNames, $enumNames);
+
+        if (count($extraEnumeratedKeys) > 0) {
+            throw new LogicException(sprintf('Enum %s enumerates [%s] which are not found in PHPDoc', $class, implode(', ', $extraEnumeratedKeys)));
+        }
+
+        $missingKeysInEnumeration = array_diff($enumNames, $enumeratedEnumNames);
+
+        if (count($missingKeysInEnumeration) > 0) {
+            throw new LogicException(sprintf('Enum %s does not enumerate [%s] which are found in PHPDoc', $class, implode(', ', $missingKeysInEnumeration)));
+        }
+
+        return $enumObjects;
     }
 
     private static function populateEnumObjectProperties(array $objects): void
@@ -308,14 +343,6 @@ abstract class Enum implements Serializable, JsonSerializable
             $object->ordinal = $ordinal++;
             $object->name = $elementName;
         }
-    }
-
-    private static function collectionShouldRepresentSimpleEnumeration(array $objectsOrEnumNames): bool
-    {
-        reset($objectsOrEnumNames);
-        $key = key($objectsOrEnumNames);
-
-        return is_int($key);
     }
 
     private static function createDynamicEnumElementObjects(string $class, array $enumNames): array

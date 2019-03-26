@@ -10,10 +10,4 @@ namespace Zlikavac32\Enum\Tests\Fixtures;
 abstract class EnumThatExtendsNonAbstractEnumWithoutEnumerate extends NonAbstractEnumWithoutEnumerate
 {
 
-    protected static function enumerate(): array
-    {
-        return [
-            'ENUM_A',
-        ];
-    }
 }

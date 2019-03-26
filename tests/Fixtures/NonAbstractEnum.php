@@ -11,10 +11,5 @@ use Zlikavac32\Enum\Enum;
  */
 class NonAbstractEnum extends Enum
 {
-    protected static function enumerate(): array
-    {
-        return [
-            'ENUM_A'
-        ];
-    }
+
 }

@@ -45,13 +45,6 @@ abstract class HashableEnum extends Enum implements Hashable
 abstract class YesNo extends HashableEnum
 {
 
-    protected static function enumerate(): array
-    {
-        return [
-            'YES',
-            'NO',
-        ];
-    }
 }
 
 var_dump(YesNo::YES() instanceof Hashable); // bool(true)
