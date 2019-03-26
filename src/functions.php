@@ -43,6 +43,7 @@ function assertFqnIsEnumClass(string $fqn): void
 function assertEnumClassAdheresConstraints(string $fqn): void {
     assertEnumClassIsAbstract($fqn);
     assertNoParentHasEnumerateMethodForClass($fqn);
+    assertNoParentHasPHPDocMethodForClass($fqn);
 }
 
 /**
@@ -75,6 +76,22 @@ function assertNoParentHasEnumerateMethodForClass(string $fqn): void {
                     $parent,
                     $fqn
                 )
+            );
+        }
+    }
+}
+
+function assertNoParentHasPHPDocMethodForClass(string $fqn): void {
+    foreach (class_parents($fqn) as $parent) {
+        $reflectionClass = new ReflectionClass($parent);
+
+        if (
+            $reflectionClass->getDocComment()
+            &&
+            preg_match('/@method\s+static/', $reflectionClass->getDocComment())
+        ) {
+            throw new LogicException(
+                sprintf('Enum %s extends %s which already defines enum names in PHPDoc', $fqn, $parent)
             );
         }
     }

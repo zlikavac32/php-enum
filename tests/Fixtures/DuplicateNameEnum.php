@@ -8,15 +8,9 @@ use Zlikavac32\Enum\Enum;
 
 /**
  * @method static DuplicateNameEnum ENUM_A
- * @method static DuplicateNameEnum ENUM_B
+ * @method static DuplicateNameEnum ENUM_A
  */
 abstract class DuplicateNameEnum extends Enum
 {
-    protected static function enumerate(): array
-    {
-        return [
-            'ENUM_A',
-            'ENUM_A',
-        ];
-    }
+
 }

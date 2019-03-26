@@ -61,7 +61,7 @@ Every call to enum object guarantees to return same instance every time it is ca
 
 ## API
 
-Main class is `\Zlikavac32\Enum\Enum` which serves as base enum (I'd rather have `enum` keywords, but life isn't perfect). You have to extend it and provide `protected static function enumerate(): array` method which will return enumerations. Check the [Usage](#usage) section to see a real example. 
+Main class is `\Zlikavac32\Enum\Enum` which serves as base enum (I'd rather have `enum` keywords, but life isn't perfect). You have to extend it and provide list of static methods in the class PHPDoc comment. Check the [Usage](#usage) section to see a real example.
 
 This class also exposes few public static and non static methods which are listed bellow.
 
@@ -89,6 +89,7 @@ In `src/functions.php` are some helper function that could help you asserting ce
 - `assertFqnIsEnumClass(string $fqn): void`
 - `assertEnumClassAdheresConstraints(string $fqn): void`
 - `assertNoParentHasEnumerateMethodForClass(string $fqn): void`
+- `assertNoParentHasPHPDocMethodForClass(string $fqn): void`
 - `assertValidNamePattern(string $name): void`
 - `assertEnumClassIsAbstract(string $fqn): void`
 - `assertValidEnumCollection(string $class, array $enumCollection, string $enumClassFqn): void`
@@ -99,7 +100,7 @@ In `src/functions.php` are some helper function that could help you asserting ce
 
 Create an abstract class that will represent your enum and let it extend `\Zlikavac32\Enum\Enum`. 
 
-You must implement method `protected static function enumerate(): array` that must return either an array of strings that will represent enumeration names or associative array of enumeration object instances that are indexed by their respective name. 
+You must list static methods in the class PHPDoc comment. Method names are used as enum names.
 
 ```
 /**
@@ -108,12 +109,7 @@ You must implement method `protected static function enumerate(): array` that mu
  */
 abstract class YesNo extends \Zlikavac32\Enum\Enum
 {
-    protected static function enumerate(): array
-    {
-        return [
-            'YES', 'NO'
-        ];
-    }
+
 }
 ```
 
@@ -122,8 +118,6 @@ Once you have your enum class defined, you can access each defined enum object b
 Other suggestion is to use constant like convention when defining enum name where you use upper-cased letters and underscore as a separator.
 
 Every call to the same enum will return that same object so you can safely use identity operator.
-
-Since enums are created using static method, it's recommended to type-hint your class with existing static methods using `@method static YourEnumClass YOUR_ENUM_NAME`.
 
 It's also possible to manually instantiate enum objects and return them as a map (instead of a list of names).
 
@@ -143,6 +137,8 @@ abstract class YesNo extends \Zlikavac32\Enum\Enum
     }
 }
 ```
+
+Note that every enum name listed in the PHPDoc comment must exist as a key in the enumerate method with a valid enum object as a value.
 
 ### More than one parent
 
@@ -164,6 +160,7 @@ The reasoning behind this is the same as with serialisation.
 
 ### Restrictions regarding inheritance
 
+- no class in between can list methods in PHPDoc comment
 - no class in between can define `enumerate` method
 - every class in the chain must be defined as abstract
 - defining enum class must be first parent for the concrete enum object

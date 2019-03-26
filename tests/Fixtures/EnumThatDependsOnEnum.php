@@ -8,7 +8,6 @@ use Zlikavac32\Enum\Enum;
 
 /**
  * @method static EnumThatDependsOnEnum ENUM_A
- * @method static EnumThatDependsOnEnum ENUM_B
  */
 abstract class EnumThatDependsOnEnum extends Enum
 {

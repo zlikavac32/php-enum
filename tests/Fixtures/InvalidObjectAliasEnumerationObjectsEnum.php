@@ -6,6 +6,9 @@ namespace Zlikavac32\Enum\Tests\Fixtures;
 
 use Zlikavac32\Enum\Enum;
 
+/**
+ * @method static InvalidObjectAliasEnumerationObjectsEnum ENUM
+ */
 abstract class InvalidObjectAliasEnumerationObjectsEnum extends Enum
 {
     protected static function enumerate(): array

@@ -12,11 +12,5 @@ use Zlikavac32\Enum\Enum;
  */
 abstract class EnumWithSomeVeryVeryLongNameA extends Enum
 {
-    protected static function enumerate(): array
-    {
-        return [
-            'ENUM_A',
-            'ENUM_B',
-        ];
-    }
+
 }
