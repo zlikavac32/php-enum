@@ -1,6 +1,6 @@
 # PHP-Enum changelog
 
-## Unreleased
+## 2.0.0 (2019-03-26)
 
 * **[ADDED]** Enum names are resolved from the class PHPDoc comment
 * **[REMOVED]** Enum names can no longer be listed as string in the `enumerate()` method
