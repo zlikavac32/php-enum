@@ -1,5 +1,9 @@
 # PHP-Enum changelog
 
+## Unreleased
+
+* **[ADDED]** `\Zlikavac32\Enum\UnhandledEnumException`
+
 ## 2.0.0 (2019-03-26)
 
 * **[ADDED]** Enum names are resolved from the class PHPDoc comment

@@ -17,6 +17,7 @@ This library aims to make your everyday enumeration use in PHP easier.
     1. [Object methods](#object-methods)
     1. [Assert functions](#assert-functions)
 1. [Usage](#usage)
+    1. [UnhandledEnumException](#unhadledenumexception)
 1. [Restrictions](#restrictions)
     1. [No serialisation](#no-serialisation)
     1. [No cloning](#no-cloning)
@@ -139,6 +140,25 @@ abstract class YesNo extends \Zlikavac32\Enum\Enum
 ```
 
 Note that every enum name listed in the PHPDoc comment must exist as a key in the enumerate method with a valid enum object as a value.
+
+### UnhandledEnumException
+
+It would be nice if we'd get notified when we have an unhandled branch when new enum names are added. This is not available without a bit of manual work.
+
+A convenient `\Zlikavac32\Enum\UnhandledEnumException` is provided to make that manual work a bit easier. Easier in a sense that we get nice error message.
+
+It's intended to be thrown in the default case when checking every enum name.
+
+```
+switch ($enum) {
+    case YesNo::YES():
+        // do something
+    case YesNo::NO():
+        // do something else
+    default:
+        throw new UnhandledEnumException($enum);
+}
+```
 
 ### More than one parent
 
