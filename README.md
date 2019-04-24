@@ -103,7 +103,7 @@ Create an abstract class that will represent your enum and let it extend `\Zlika
 
 You must list static methods in the class PHPDoc comment. Method names are used as enum names.
 
-```
+```php
 /**
  * @method static YesNo YES
  * @method static YesNo NO
@@ -122,7 +122,7 @@ Every call to the same enum will return that same object so you can safely use i
 
 It's also possible to manually instantiate enum objects and return them as a map (instead of a list of names).
 
-```
+```php
 /**
  * @method static YesNo YES
  * @method static YesNo NO
@@ -149,7 +149,7 @@ A convenient `\Zlikavac32\Enum\UnhandledEnumException` is provided to make that 
 
 It's intended to be thrown in the default case when checking every enum name.
 
-```
+```php
 switch ($enum) {
     case YesNo::YES():
         // do something
