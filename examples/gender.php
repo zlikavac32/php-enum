@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Zlikavac32\Rick\Examples;
+namespace Zlikavac32\Enum\Examples;
 
 use Zlikavac32\Enum\Enum;
 
