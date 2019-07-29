@@ -7,14 +7,9 @@ namespace Zlikavac32\Enum\Tests\Fixtures;
 use Zlikavac32\Enum\Enum;
 
 /**
- * @method static InvalidAliasNameEnum INVA LID
+ * @method static InvalidAliasNameEnum 3ID
  */
 abstract class InvalidAliasNameEnum extends Enum
 {
-    protected static function enumerate(): array
-    {
-        return [
-            'INVA LID',
-        ];
-    }
+
 }

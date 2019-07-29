@@ -293,7 +293,7 @@ abstract class Enum implements Serializable, JsonSerializable
             );
         }
 
-        $regex = '/@method\s+static\s+[^\s]+\s+(.+)\s*(?:\(\))?/';
+        $regex = '/@method\s+static\s+[^\s]+\s+(\w+)\s*(?:\(\))?\s*$/m';
 
         if (!preg_match_all($regex, $docBlock, $matches, PREG_SET_ORDER)) {
             throw new LogicException(sprintf('Enum %s must define at least one element', $class));

@@ -212,7 +212,7 @@ class EnumTest extends TestCase
     public function testThatInvalidAliasNameThrowsException(): void
     {
         $this->expectException(LogicException::class);
-        $this->expectExceptionMessage('Element name "INVA LID" does not match pattern /^[a-zA-Z_][a-zA-Z_0-9]*$/');
+        $this->expectExceptionMessage('Element name "3ID" does not match pattern /^[a-zA-Z_][a-zA-Z_0-9]*$/');
 
         InvalidAliasNameEnum::values();
     }
@@ -410,5 +410,31 @@ class EnumTest extends TestCase
         $this->expectExceptionMessage('Enum Zlikavac32\Enum\Tests\Fixtures\EnumThatEnumeratesToLittle does not enumerate [ENUM_B, ENUM_C] which are found in PHPDoc');
 
         EnumThatEnumeratesToLittle::ENUM_A();
+    }
+
+    public function testThatCarriageReturnInMethodNameIsNotCaptured(): void
+    {
+        // to avoid editor accidentally deleting \r, this enum fixture is evaluated
+        $code = <<<'PHP'
+namespace Zlikavac32\Enum\Tests\Fixtures;
+
+use Zlikavac32\Enum\Enum;
+
+/**
+ * @method static EnumWithCarriageReturnInMethod ENUM_A%s
+ */
+abstract class EnumWithCarriageReturnInMethod extends Enum
+{
+
+}
+PHP;
+
+        eval(sprintf($code, "\r"));
+
+        $this->assertSame(
+            0,
+            \Zlikavac32\Enum\Tests\Fixtures\EnumWithCarriageReturnInMethod::ENUM_A()
+                            ->ordinal()
+        );
     }
 }
