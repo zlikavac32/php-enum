@@ -1,7 +1,8 @@
 # PHP-Enum changelog
 
-## Unreleased
+## 2.0.1 (2019-07-29)
 
+* **[FIXED]** Method regex capturing carriage return
 * **[ADDED]** `\Zlikavac32\Enum\UnhandledEnumException`
 
 ## 2.0.0 (2019-03-26)
