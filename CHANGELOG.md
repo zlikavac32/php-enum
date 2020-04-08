@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+* **[CHANGED]** `\Error` is thrown instead of the `\LogicException` if a property is accessed before it's initialized
 * **[CHANGED]** Minimal supported PHP version is 7.4
 
 ## 2.0.1 (2019-07-29)

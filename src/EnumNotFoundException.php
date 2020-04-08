@@ -10,14 +10,9 @@ use function sprintf;
 
 class EnumNotFoundException extends LogicException
 {
-    /**
-     * @var string
-     */
-    private $missingEnumName;
-    /**
-     * @var string
-     */
-    private $enumClass;
+
+    private string $missingEnumName;
+    private string $enumClass;
 
     public function __construct(string $missingEnumName, string $enumClass, int $code = 0, Throwable $previous = null)
     {

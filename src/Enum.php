@@ -23,21 +23,14 @@ abstract class Enum implements Serializable, JsonSerializable
     /**
      * @var Enum[][]
      */
-    private static $existingEnums = [];
+    private static array $existingEnums = [];
     /**
      * @var bool[]
      */
-    private static $enumConstructionContext = [];
-    /**
-     * @var int
-     */
-    private $ordinal;
-    /**
-     * @var string
-     */
-    private $name;
-
-    private $correctlyInitialized = false;
+    private static array $enumConstructionContext = [];
+    private int $ordinal;
+    private string $name;
+    private bool $correctlyInitialized = false;
 
     public function __construct()
     {
@@ -77,20 +70,12 @@ abstract class Enum implements Serializable, JsonSerializable
     {
         $this->assertCorrectlyInitialized();
 
-        if (null === $this->ordinal) {
-            throw new LogicException('You can not retrieve ordinal within enumerate()');
-        }
-
         return $this->ordinal;
     }
 
     final public function name(): string
     {
         $this->assertCorrectlyInitialized();
-
-        if (null === $this->name) {
-            throw new LogicException('You can not retrieve name within enumerate()');
-        }
 
         return $this->name;
     }
