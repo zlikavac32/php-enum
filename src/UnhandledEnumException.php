@@ -9,14 +9,8 @@ use LogicException;
 class UnhandledEnumException extends LogicException
 {
 
-    /**
-     * @var Enum
-     */
-    private $enum;
-    /**
-     * @var string
-     */
-    private $enumFqn;
+    private Enum $enum;
+    private string $enumFqn;
 
     public function __construct(Enum $enum)
     {

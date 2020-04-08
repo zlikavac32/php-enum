@@ -16,7 +16,6 @@ use function preg_match;
 use function sprintf;
 
 /**
- * @param string $fqn
  * @throws LogicException If value in $fqn is not a class extending Zlikavac32\Enum\Enum
  */
 function assertFqnIsEnumClass(string $fqn): void
@@ -36,7 +35,6 @@ function assertFqnIsEnumClass(string $fqn): void
  *   - no class between enum class and Zlikavac32\Enum\Enum (both exclusive) can implement enumerate() method
  *   - every class in the chain must be abstract
  *
- * @param string $fqn
  * @throws ReflectionException If something went wrong in reflection API
  * @throws LogicException If some condition is not fulfilled
  */
@@ -48,8 +46,6 @@ function assertEnumClassAdheresConstraints(string $fqn): void {
 
 /**
  * Functions asserts that parents (except for Zlikavac32\Enum\Enum) are abstract and do not define enumerate() method.
- *
- * @param string $fqn
  *
  * @throws ReflectionException If something went wrong in reflection API
  * @throws LogicException If one of parents is not abstract
@@ -98,8 +94,6 @@ function assertNoParentHasPHPDocMethodForClass(string $fqn): void {
 }
 
 /**
- * @param string $name
- *
  * @throws LogicException If pattern "/^[a-zA-Z_][a-zA-Z_0-9]*$/" is not satisfied
  */
 function assertValidNamePattern(string $name): void
@@ -115,8 +109,6 @@ function assertValidNamePattern(string $name): void
 
 /**
  * Checks that enum class is abstract.
- *
- * @param string $fqn
  *
  * @throws ReflectionException If something went wrong in reflection API
  * @throws LogicException If enum class is not abstract
@@ -139,10 +131,6 @@ function assertEnumClassIsAbstract(string $fqn): void
  *   - element name must be valid string
  *   - enum object must be instance of $class
  *
- * @param string $class
- * @param array $enumCollection
- * @param string $enumClassFqn
- *
  * @throws LogicException If some condition is not fulfilled
  */
 function assertValidEnumCollection(string $class, array $enumCollection, string $enumClassFqn): void
@@ -157,7 +145,6 @@ function assertValidEnumCollection(string $class, array $enumCollection, string 
 /**
  * Asserts that value in $name is string.
  *
- * @param string $class
  * @param $name
  *
  * @throws LogicException If value in $name is not string
@@ -183,9 +170,7 @@ function assertElementNameIsString(string $class, $name): void
  * Asserts that $object is instance off $class. Parameter $enumClassFqn must (although is not enforced currently) have
  * same value as $class. It will be removed in the future.
  *
- * @param string $class
- * @param $object
- * @param string $enumClassFqn
+ * @param mixed $object
  *
  * @throws LogicException If $object is not an instance of $class
  */

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Zlikavac32\Enum\Tests;
 
+use Error;
 use LogicException;
 use PHPUnit\Framework\TestCase;
 use Zlikavac32\Enum\Tests\Fixtures\AbstractEnumWithoutEnumerate;
@@ -74,16 +75,16 @@ class EnumTest extends TestCase
 
     public function testThatOrdinalThrowExceptionUntilValueIsDefined(): void
     {
-        $this->expectException(LogicException::class);
-        $this->expectExceptionMessage('You can not retrieve ordinal within enumerate()');
+        $this->expectException(Error::class);
+        $this->expectExceptionMessage('Typed property Zlikavac32\Enum\Enum::$ordinal must not be accessed before initializatio');
 
         OrdinalWithinEnumerateEnum::ENUM_A();
     }
 
     public function testThatNameThrowExceptionUntilValueIsDefined(): void
     {
-        $this->expectException(LogicException::class);
-        $this->expectExceptionMessage('You can not retrieve name within enumerate()');
+        $this->expectException(Error::class);
+        $this->expectExceptionMessage('Typed property Zlikavac32\Enum\Enum::$name must not be accessed before initialization');
 
         NameWithinEnumerateEnum::ENUM_A();
     }
