@@ -17,7 +17,7 @@ use function sprintf;
 use function Zlikavac32\Enum\assertElementNameIsString;
 use function Zlikavac32\Enum\assertEnumClassIsAbstract;
 use function Zlikavac32\Enum\assertFqnIsEnumClass;
-use function Zlikavac32\Enum\assertNoParentHasEnumerateMethodForClass;
+use function Zlikavac32\Enum\assertEnumClassParentsAdhereConstraints;
 use function Zlikavac32\Enum\assertValidEnumCollection;
 use function Zlikavac32\Enum\assertValidEnumElementObjectType;
 use function Zlikavac32\Enum\assertValidNamePattern;
@@ -168,7 +168,7 @@ class functionsTest extends TestCase
         $this->expectException(LogicException::class);
         $this->expectExceptionMessage('Enum Zlikavac32\Enum\Tests\Fixtures\EnumThatExtendsValidObjectsEnum extends Zlikavac32\Enum\Tests\Fixtures\ValidObjectsEnum which already defines enumerate() method');
 
-        assertNoParentHasEnumerateMethodForClass(EnumThatExtendsValidObjectsEnum::class);
+        assertEnumClassParentsAdhereConstraints(EnumThatExtendsValidObjectsEnum::class);
     }
 
     public function testThatExceptionIsThrownWhenParentHasPHPDoc(): void
@@ -176,21 +176,21 @@ class functionsTest extends TestCase
         $this->expectException(LogicException::class);
         $this->expectExceptionMessage('Enum Zlikavac32\Enum\Tests\Fixtures\EnumThatExtendsValidObjectsEnum extends Zlikavac32\Enum\Tests\Fixtures\ValidObjectsEnum which already defines enumerate() method');
 
-        assertNoParentHasEnumerateMethodForClass(EnumThatExtendsValidObjectsEnum::class);
+        assertEnumClassParentsAdhereConstraints(EnumThatExtendsValidObjectsEnum::class);
     }
 
     public function testThatExceptionIsThrownWhenParentIsNotAbstract(): void
     {
         $this->expectException(LogicException::class);
-        $this->expectExceptionMessage('Class Zlikavac32\Enum\Tests\Fixtures\NonAbstractEnumWithoutEnumerate must be also abstract (since Zlikavac32\Enum\Tests\Fixtures\EnumThatExtendsNonAbstractEnumWithoutEnumerate extends it)');
+        $this->expectExceptionMessage('Enum Zlikavac32\Enum\Tests\Fixtures\NonAbstractEnumWithoutEnumerate must be declared as abstract');
 
-        assertNoParentHasEnumerateMethodForClass(EnumThatExtendsNonAbstractEnumWithoutEnumerate::class);
+        assertEnumClassParentsAdhereConstraints(EnumThatExtendsNonAbstractEnumWithoutEnumerate::class);
     }
 
     public function testThatGoodEnumWithParentPasses(): void
     {
         try {
-            assertNoParentHasEnumerateMethodForClass(ValidEnumWithOneParent::class);
+            assertEnumClassParentsAdhereConstraints(ValidEnumWithOneParent::class);
 
             $this->assertTrue(true);
         } catch (Throwable $e) {

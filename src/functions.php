@@ -40,7 +40,7 @@ function assertFqnIsEnumClass(string $fqn): void
  */
 function assertEnumClassAdheresConstraints(string $fqn): void {
     assertEnumClassIsAbstract($fqn);
-    assertNoParentHasEnumerateMethodForClass($fqn);
+    assertEnumClassParentsAdhereConstraints($fqn);
     assertNoParentHasPHPDocMethodForClass($fqn);
 }
 
@@ -51,8 +51,7 @@ function assertEnumClassAdheresConstraints(string $fqn): void {
  * @throws LogicException If one of parents is not abstract
  * @throws LogicException If one of parents defines enumerate() method
  */
-// @todo: change name of this to something more meaningful
-function assertNoParentHasEnumerateMethodForClass(string $fqn): void {
+function assertEnumClassParentsAdhereConstraints(string $fqn): void {
     foreach (class_parents($fqn) as $parent) {
         $reflectionClass = new ReflectionClass($parent);
         $reflectionMethod = $reflectionClass->getMethod('enumerate');
@@ -65,15 +64,7 @@ function assertNoParentHasEnumerateMethodForClass(string $fqn): void {
             );
         }
 
-        if (!$reflectionClass->isAbstract()) {
-            throw new LogicException(
-                sprintf(
-                    'Class %s must be also abstract (since %s extends it)',
-                    $parent,
-                    $fqn
-                )
-            );
-        }
+        assertEnumClassIsAbstract($parent);
     }
 }
 
@@ -113,7 +104,6 @@ function assertValidNamePattern(string $name): void
  * @throws ReflectionException If something went wrong in reflection API
  * @throws LogicException If enum class is not abstract
  */
-// @todo: Remove this, and merge with assertNoParentHasEnumerateMethodForClass()
 function assertEnumClassIsAbstract(string $fqn): void
 {
     if ((new ReflectionClass($fqn))->isAbstract()) {
