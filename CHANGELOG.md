@@ -1,6 +1,6 @@
 # PHP-Enum changelog
 
-## Unreleased
+## 3.0.0 (2020-04-08)
 
 * **[CHANGED]** `\Zlikavac32\Enum\assertNoParentHasEnumerateMethodForClass()` is renamed to `\Zlikavac32\Enum\assertEnumClassParentsAdhereConstraints()`
 * **[CHANGED]** `\Error` is thrown instead of the `\LogicException` if a property is accessed before it's initialized
