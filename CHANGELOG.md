@@ -1,5 +1,9 @@
 # PHP-Enum changelog
 
+## Unreleased
+
+* **[CHANGED]** Minimal supported PHP version is 7.4
+
 ## 2.0.1 (2019-07-29)
 
 * **[FIXED]** Method regex capturing carriage return
