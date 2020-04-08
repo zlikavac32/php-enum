@@ -21,17 +21,11 @@ class EnumNotFoundException extends LogicException
         $this->enumClass = $enumClass;
     }
 
-    /**
-     * @return string
-     */
     public function missingEnumName(): string
     {
         return $this->missingEnumName;
     }
 
-    /**
-     * @return string
-     */
     public function enumClass(): string
     {
         return $this->enumClass;

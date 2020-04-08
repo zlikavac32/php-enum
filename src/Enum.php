@@ -123,7 +123,6 @@ abstract class Enum implements Serializable, JsonSerializable
     }
 
     /**
-     * @return string|void
      * @throws Throwable
      */
     final public function serialize()
@@ -173,8 +172,6 @@ abstract class Enum implements Serializable, JsonSerializable
     }
 
     /**
-     * @param string $name
-     *
      * @return bool
      */
     final public static function contains(string $name): bool
@@ -183,8 +180,6 @@ abstract class Enum implements Serializable, JsonSerializable
     }
 
     /**
-     * @param string $name
-     *
      * @todo: make final as is stated in docs
      *
      * @return static
