@@ -386,7 +386,7 @@ class EnumTest extends TestCase
     public function testThatNonDefiningEnumClassInChainMustBeAbstract(): void
     {
         $this->expectException(LogicException::class);
-        $this->expectExceptionMessage('Class Zlikavac32\Enum\Tests\Fixtures\NonAbstractEnumWithoutEnumerate must be also abstract (since Zlikavac32\Enum\Tests\Fixtures\EnumThatExtendsNonAbstractEnumWithoutEnumerate extends it)');
+        $this->expectExceptionMessage('Enum Zlikavac32\Enum\Tests\Fixtures\NonAbstractEnumWithoutEnumerate must be declared as abstract');
 
         EnumThatExtendsNonAbstractEnumWithoutEnumerate::ENUM_A();
     }

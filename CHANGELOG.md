@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+* **[CHANGED]** `\Zlikavac32\Enum\assertNoParentHasEnumerateMethodForClass()` is renamed to `\Zlikavac32\Enum\assertEnumClassParentsAdhereConstraints()`
 * **[CHANGED]** `\Error` is thrown instead of the `\LogicException` if a property is accessed before it's initialized
 * **[CHANGED]** Minimal supported PHP version is 7.4
 
