@@ -101,7 +101,7 @@ abstract class Enum implements Serializable, JsonSerializable
     /**
      * @throws Throwable
      */
-    final public static function __set_state()
+    final public static function __set_state(array $array): object
     {
         throw self::createNoSerializeUnserializeException();
     }
@@ -109,7 +109,7 @@ abstract class Enum implements Serializable, JsonSerializable
     /**
      * @throws Throwable
      */
-    final public function __wakeup()
+    final public function __wakeup(): void
     {
         throw self::createNoSerializeUnserializeException();
     }
@@ -117,7 +117,7 @@ abstract class Enum implements Serializable, JsonSerializable
     /**
      * @throws Throwable
      */
-    final public function __sleep()
+    final public function __sleep(): array
     {
         throw self::createNoSerializeUnserializeException();
     }
@@ -125,7 +125,7 @@ abstract class Enum implements Serializable, JsonSerializable
     /**
      * @throws Throwable
      */
-    final public function serialize()
+    final public function serialize(): array
     {
         throw self::createNoSerializeUnserializeException();
     }
@@ -150,7 +150,7 @@ abstract class Enum implements Serializable, JsonSerializable
         return $this->name();
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): string
     {
         return $this->name();
     }

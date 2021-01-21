@@ -1,5 +1,9 @@
 # PHP-Enum changelog
 
+## Unreleased
+
+* **[CHANGED]** Added support for PHP 8.0
+
 ## 3.0.0 (2020-04-08)
 
 * **[CHANGED]** `\Zlikavac32\Enum\assertNoParentHasEnumerateMethodForClass()` is renamed to `\Zlikavac32\Enum\assertEnumClassParentsAdhereConstraints()`
