@@ -263,7 +263,7 @@ class EnumTest extends TestCase
         $this->expectException(LogicException::class);
         $this->expectExceptionMessage('Serialization/deserialization of enum element is not allowed');
 
-        ValidStringEnum::__set_state();
+        ValidStringEnum::__set_state([]);
     }
 
     public function testThatSleepThrowsException(): void

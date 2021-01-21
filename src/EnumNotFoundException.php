@@ -11,14 +11,9 @@ use function sprintf;
 class EnumNotFoundException extends LogicException
 {
 
-    private string $missingEnumName;
-    private string $enumClass;
-
-    public function __construct(string $missingEnumName, string $enumClass, int $code = 0, Throwable $previous = null)
+    public function __construct(private string $missingEnumName, private string $enumClass, int $code = 0, Throwable $previous = null)
     {
         parent::__construct(sprintf('Enum element %s missing in %s', $missingEnumName, $enumClass), $code, $previous);
-        $this->missingEnumName = $missingEnumName;
-        $this->enumClass = $enumClass;
     }
 
     public function missingEnumName(): string
