@@ -1,6 +1,6 @@
 # PHP-Enum changelog
 
-## Unreleased
+## 4.0.0 (2021-04-12)
 
 * **[CHANGED]** Added support for PHP 8.0
 
