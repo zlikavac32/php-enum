@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Zlikavac32\Enum\Examples;
+namespace Zlikavac32\ZEnum\Examples;
 
 use LogicException;
-use Zlikavac32\Enum\Enum;
+use Zlikavac32\ZEnum\ZEnum;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -25,7 +25,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
  * @method static MathematicalOperator TIMES
  * @method static MathematicalOperator DIV
  */
-abstract class MathematicalOperator extends Enum
+abstract class MathematicalOperator extends ZEnum
 {
     protected static function enumerate(): array
     {

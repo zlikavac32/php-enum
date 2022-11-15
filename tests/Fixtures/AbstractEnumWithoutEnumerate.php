@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Zlikavac32\Enum\Tests\Fixtures;
+namespace Zlikavac32\ZEnum\Tests\Fixtures;
 
-use Zlikavac32\Enum\Enum;
+use Zlikavac32\ZEnum\ZEnum;
 
-abstract class AbstractEnumWithoutEnumerate extends Enum
+abstract class AbstractEnumWithoutEnumerate extends ZEnum
 {
 
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Zlikavac32\Enum;
+namespace Zlikavac32\ZEnum;
 
 use ArrayIterator;
 use InvalidArgumentException;
@@ -18,10 +18,10 @@ use function get_class;
 use function get_parent_class;
 use function sprintf;
 
-abstract class Enum implements Serializable, JsonSerializable
+abstract class ZEnum implements Serializable, JsonSerializable
 {
     /**
-     * @var Enum[][]
+     * @var ZEnum[][]
      */
     private static array $existingEnums = [];
     /**
@@ -80,7 +80,7 @@ abstract class Enum implements Serializable, JsonSerializable
         return $this->name;
     }
 
-    final public function isAnyOf(Enum ...$enums): bool
+    final public function isAnyOf(ZEnum ...$enums): bool
     {
         $this->assertCorrectlyInitialized();
 
@@ -184,7 +184,7 @@ abstract class Enum implements Serializable, JsonSerializable
      *
      * @return static
      */
-    public static function valueOf(string $name): Enum
+    public static function valueOf(string $name): ZEnum
     {
         return self::__callStatic($name, []);
     }
@@ -195,7 +195,7 @@ abstract class Enum implements Serializable, JsonSerializable
      *
      * @return static
      */
-    final public static function __callStatic($name, $arguments): Enum
+    final public static function __callStatic($name, $arguments): ZEnum
     {
         if (count($arguments) > 0) {
             throw new InvalidArgumentException(
@@ -218,7 +218,7 @@ abstract class Enum implements Serializable, JsonSerializable
     }
 
     /**
-     * @return Enum[]
+     * @return ZEnum[]
      */
     private static function retrieveCurrentContextEnumerations(): array
     {
@@ -250,7 +250,7 @@ abstract class Enum implements Serializable, JsonSerializable
 
         $enumNames = self::resolveMethodsFromDocblock($class);
 
-        /* @var Enum[] $enumObjects */
+        /* @var ZEnum[] $enumObjects */
         $enumObjects = static::enumerate();
 
         $objects = self::normalizeElementsArray($class, $enumNames, $enumObjects);

@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Zlikavac32\Enum\Tests\Fixtures;
+namespace Zlikavac32\ZEnum\Tests\Fixtures;
 
-use Zlikavac32\Enum\Enum;
+use Zlikavac32\ZEnum\ZEnum;
 
 /**
  * @method static EnumThatDependsOnEnum ENUM_A
  */
-abstract class EnumThatDependsOnEnum extends Enum
+abstract class EnumThatDependsOnEnum extends ZEnum
 {
     /**
      * @var ValidStringEnum

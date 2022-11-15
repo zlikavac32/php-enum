@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Zlikavac32\Enum\Tests\Fixtures;
+namespace Zlikavac32\ZEnum\Tests\Fixtures;
 
-use Zlikavac32\Enum\Enum;
+use Zlikavac32\ZEnum\ZEnum;
 
 /**
  * @method static EnumThatEnumeratesToMuch ENUM_A
  */
-abstract class EnumThatEnumeratesToMuch extends Enum
+abstract class EnumThatEnumeratesToMuch extends ZEnum
 {
     protected static function enumerate(): array
     {

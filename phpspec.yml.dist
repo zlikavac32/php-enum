@@ -1,5 +1,5 @@
 suites:
     project_stats:
-        namespace: Zlikavac32\Enum
-        psr4_prefix: Zlikavac32\Enum
+        namespace: Zlikavac32\ZEnum
+        psr4_prefix: Zlikavac32\ZEnum
 formatter.name: dot

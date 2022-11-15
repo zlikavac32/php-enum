@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Zlikavac32\Enum\Examples;
+namespace Zlikavac32\ZEnum\Examples;
 
 use Generator;
-use Zlikavac32\Enum\Enum;
+use Zlikavac32\ZEnum\ZEnum;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -24,7 +24,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
  * @method static Token T_NUMBER
  * @method static Token T_INVALID
  */
-abstract class Token extends Enum
+abstract class Token extends ZEnum
 {
     /**
      * @var string

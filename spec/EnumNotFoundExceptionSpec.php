@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace spec\Zlikavac32\Enum;
+namespace spec\Zlikavac32\ZEnum;
 
 use Exception;
 use PhpSpec\ObjectBehavior;
-use Zlikavac32\Enum\EnumNotFoundException;
+use Zlikavac32\ZEnum\EnumNotFoundException;
 
 class EnumNotFoundExceptionSpec extends ObjectBehavior
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Zlikavac32\Enum\Tests\Fixtures;
+namespace Zlikavac32\ZEnum\Tests\Fixtures;
 
 /**
  * @method static ValidStringEnum ENUM_A

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Zlikavac32\Enum;
+namespace Zlikavac32\ZEnum;
 
 use LogicException;
 use Throwable;

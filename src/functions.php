@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Zlikavac32\Enum;
+namespace Zlikavac32\ZEnum;
 
 use LogicException;
 use ReflectionClass;
@@ -16,15 +16,15 @@ use function preg_match;
 use function sprintf;
 
 /**
- * @throws LogicException If value in $fqn is not a class extending Zlikavac32\Enum\Enum
+ * @throws LogicException If value in $fqn is not a class extending Zlikavac32\ZEnum\Enum
  */
 function assertFqnIsEnumClass(string $fqn): void
 {
-    if (is_subclass_of($fqn, Enum::class)) {
+    if (is_subclass_of($fqn, ZEnum::class)) {
         return ;
     }
 
-    throw new LogicException(sprintf('%s does not have %s as it\'s parent', $fqn, Enum::class));
+    throw new LogicException(sprintf('%s does not have %s as it\'s parent', $fqn, ZEnum::class));
 }
 
 /**
@@ -32,7 +32,7 @@ function assertFqnIsEnumClass(string $fqn): void
  *
  * Currently they are:
  *   - enum class must be abstract
- *   - no class between enum class and Zlikavac32\Enum\Enum (both exclusive) can implement enumerate() method
+ *   - no class between enum class and Zlikavac32\ZEnum\Enum (both exclusive) can implement enumerate() method
  *   - every class in the chain must be abstract
  *
  * @throws ReflectionException If something went wrong in reflection API
@@ -45,7 +45,7 @@ function assertEnumClassAdheresConstraints(string $fqn): void {
 }
 
 /**
- * Functions asserts that parents (except for Zlikavac32\Enum\Enum) are abstract and do not define enumerate() method.
+ * Functions asserts that parents (except for Zlikavac32\ZEnum\Enum) are abstract and do not define enumerate() method.
  *
  * @throws ReflectionException If something went wrong in reflection API
  * @throws LogicException If one of parents is not abstract
@@ -58,7 +58,7 @@ function assertEnumClassParentsAdhereConstraints(string $fqn): void {
 
         $declaringClass = $reflectionMethod->getDeclaringClass();
 
-        if ($declaringClass->name !== Enum::class) {
+        if ($declaringClass->name !== ZEnum::class) {
             throw new LogicException(
                 sprintf('Enum %s extends %s which already defines enumerate() method', $fqn, $parent)
             );
