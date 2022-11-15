@@ -2,25 +2,25 @@
 
 declare(strict_types=1);
 
-namespace Zlikavac32\Enum\Tests;
+namespace Zlikavac32\ZEnum\Tests;
 
 use LogicException;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use Throwable;
-use Zlikavac32\Enum\Tests\Fixtures\EnumThatExtendsNonAbstractEnumWithoutEnumerate;
-use Zlikavac32\Enum\Tests\Fixtures\EnumThatExtendsValidObjectsEnum;
-use Zlikavac32\Enum\Tests\Fixtures\NonAbstractEnum;
-use Zlikavac32\Enum\Tests\Fixtures\ValidEnumWithOneParent;
-use Zlikavac32\Enum\Tests\Fixtures\ValidStringEnum;
+use Zlikavac32\ZEnum\Tests\Fixtures\EnumThatExtendsNonAbstractEnumWithoutEnumerate;
+use Zlikavac32\ZEnum\Tests\Fixtures\EnumThatExtendsValidObjectsEnum;
+use Zlikavac32\ZEnum\Tests\Fixtures\NonAbstractEnum;
+use Zlikavac32\ZEnum\Tests\Fixtures\ValidEnumWithOneParent;
+use Zlikavac32\ZEnum\Tests\Fixtures\ValidStringEnum;
 use function sprintf;
-use function Zlikavac32\Enum\assertElementNameIsString;
-use function Zlikavac32\Enum\assertEnumClassIsAbstract;
-use function Zlikavac32\Enum\assertFqnIsEnumClass;
-use function Zlikavac32\Enum\assertEnumClassParentsAdhereConstraints;
-use function Zlikavac32\Enum\assertValidEnumCollection;
-use function Zlikavac32\Enum\assertValidEnumElementObjectType;
-use function Zlikavac32\Enum\assertValidNamePattern;
+use function Zlikavac32\ZEnum\assertElementNameIsString;
+use function Zlikavac32\ZEnum\assertEnumClassIsAbstract;
+use function Zlikavac32\ZEnum\assertFqnIsEnumClass;
+use function Zlikavac32\ZEnum\assertEnumClassParentsAdhereConstraints;
+use function Zlikavac32\ZEnum\assertValidEnumCollection;
+use function Zlikavac32\ZEnum\assertValidEnumElementObjectType;
+use function Zlikavac32\ZEnum\assertValidNamePattern;
 
 class functionsTest extends TestCase
 {
@@ -39,7 +39,7 @@ class functionsTest extends TestCase
     public function testThatFqnNotRepresentingValidEnumClassDoesNotPassAssert(): void
     {
         $this->expectException(LogicException::class);
-        $this->expectExceptionMessage('stdClass does not have Zlikavac32\Enum\Enum as it\'s parent');
+        $this->expectExceptionMessage('stdClass does not have Zlikavac32\ZEnum\ZEnum as it\'s parent');
 
         assertFqnIsEnumClass(stdClass::class);
     }
@@ -77,7 +77,7 @@ class functionsTest extends TestCase
     public function testThatExceptionIsThrownOnNonAbstractClass(): void
     {
         $this->expectException(LogicException::class);
-        $this->expectExceptionMessage('Enum Zlikavac32\Enum\Tests\Fixtures\NonAbstractEnum must be declared as abstract');
+        $this->expectExceptionMessage('Enum Zlikavac32\ZEnum\Tests\Fixtures\NonAbstractEnum must be declared as abstract');
 
         assertEnumClassIsAbstract(NonAbstractEnum::class);
     }
@@ -96,7 +96,7 @@ class functionsTest extends TestCase
     public function testThatExceptionIsThrownWhenElementNameIsObject(): void
     {
         $this->expectException(LogicException::class);
-        $this->expectExceptionMessage('Element name (object instance of stdClass) in enum Zlikavac32\Enum\Tests\Fixtures\ValidStringEnum is not valid');
+        $this->expectExceptionMessage('Element name (object instance of stdClass) in enum Zlikavac32\ZEnum\Tests\Fixtures\ValidStringEnum is not valid');
 
         assertElementNameIsString(ValidStringEnum::class, new stdClass());
     }
@@ -104,7 +104,7 @@ class functionsTest extends TestCase
     public function testThatExceptionIsThrownWhenElementNameIsScalar(): void
     {
         $this->expectException(LogicException::class);
-        $this->expectExceptionMessage('Element name 12467 in enum Zlikavac32\Enum\Tests\Fixtures\ValidStringEnum is not valid');
+        $this->expectExceptionMessage('Element name 12467 in enum Zlikavac32\ZEnum\Tests\Fixtures\ValidStringEnum is not valid');
         assertElementNameIsString(ValidStringEnum::class, 12467);
     }
 
@@ -122,7 +122,7 @@ class functionsTest extends TestCase
     public function testThatExceptionIsThrownWhenElementIsInvalidClassInstance(): void
     {
         $this->expectException(LogicException::class);
-        $this->expectExceptionMessage('Enum element object in enum Zlikavac32\Enum\Tests\Fixtures\ValidStringEnum must be an instance of Zlikavac32\Enum\Tests\Fixtures\ValidStringEnum (an instance of stdClass received)');
+        $this->expectExceptionMessage('Enum element object in enum Zlikavac32\ZEnum\Tests\Fixtures\ValidStringEnum must be an instance of Zlikavac32\ZEnum\Tests\Fixtures\ValidStringEnum (an instance of stdClass received)');
 
         assertValidEnumElementObjectType(ValidStringEnum::class, new stdClass(), ValidStringEnum::class);
     }
@@ -130,7 +130,7 @@ class functionsTest extends TestCase
     public function testThatExceptionIsThrownWhenElementIsScalar(): void
     {
         $this->expectException(LogicException::class);
-        $this->expectExceptionMessage('Enum element object in enum Zlikavac32\Enum\Tests\Fixtures\ValidStringEnum must be an instance of Zlikavac32\Enum\Tests\Fixtures\ValidStringEnum (integer received)');
+        $this->expectExceptionMessage('Enum element object in enum Zlikavac32\ZEnum\Tests\Fixtures\ValidStringEnum must be an instance of Zlikavac32\ZEnum\Tests\Fixtures\ValidStringEnum (integer received)');
 
         assertValidEnumElementObjectType(ValidStringEnum::class, 12467, ValidStringEnum::class);
     }
@@ -153,7 +153,7 @@ class functionsTest extends TestCase
     public function testThatExceptionIsThrownWhenCollectionIsNotValid(): void
     {
         $this->expectException(LogicException::class);
-        $this->expectExceptionMessage('Element name 0 in enum Zlikavac32\Enum\Tests\Fixtures\ValidStringEnum is not valid');
+        $this->expectExceptionMessage('Element name 0 in enum Zlikavac32\ZEnum\Tests\Fixtures\ValidStringEnum is not valid');
 
         assertValidEnumCollection(ValidStringEnum::class, [new stdClass()], ValidStringEnum::class);
     }
@@ -166,7 +166,7 @@ class functionsTest extends TestCase
     public function testThatExceptionIsThrownWhenParentHasEnumerate(): void
     {
         $this->expectException(LogicException::class);
-        $this->expectExceptionMessage('Enum Zlikavac32\Enum\Tests\Fixtures\EnumThatExtendsValidObjectsEnum extends Zlikavac32\Enum\Tests\Fixtures\ValidObjectsEnum which already defines enumerate() method');
+        $this->expectExceptionMessage('Enum Zlikavac32\ZEnum\Tests\Fixtures\EnumThatExtendsValidObjectsEnum extends Zlikavac32\ZEnum\Tests\Fixtures\ValidObjectsEnum which already defines enumerate() method');
 
         assertEnumClassParentsAdhereConstraints(EnumThatExtendsValidObjectsEnum::class);
     }
@@ -174,7 +174,7 @@ class functionsTest extends TestCase
     public function testThatExceptionIsThrownWhenParentHasPHPDoc(): void
     {
         $this->expectException(LogicException::class);
-        $this->expectExceptionMessage('Enum Zlikavac32\Enum\Tests\Fixtures\EnumThatExtendsValidObjectsEnum extends Zlikavac32\Enum\Tests\Fixtures\ValidObjectsEnum which already defines enumerate() method');
+        $this->expectExceptionMessage('Enum Zlikavac32\ZEnum\Tests\Fixtures\EnumThatExtendsValidObjectsEnum extends Zlikavac32\ZEnum\Tests\Fixtures\ValidObjectsEnum which already defines enumerate() method');
 
         assertEnumClassParentsAdhereConstraints(EnumThatExtendsValidObjectsEnum::class);
     }
@@ -182,7 +182,7 @@ class functionsTest extends TestCase
     public function testThatExceptionIsThrownWhenParentIsNotAbstract(): void
     {
         $this->expectException(LogicException::class);
-        $this->expectExceptionMessage('Enum Zlikavac32\Enum\Tests\Fixtures\NonAbstractEnumWithoutEnumerate must be declared as abstract');
+        $this->expectExceptionMessage('Enum Zlikavac32\ZEnum\Tests\Fixtures\NonAbstractEnumWithoutEnumerate must be declared as abstract');
 
         assertEnumClassParentsAdhereConstraints(EnumThatExtendsNonAbstractEnumWithoutEnumerate::class);
     }

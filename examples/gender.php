@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Zlikavac32\Enum\Examples;
+namespace Zlikavac32\ZEnum\Examples;
 
-use Zlikavac32\Enum\Enum;
+use Zlikavac32\ZEnum\ZEnum;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -17,7 +17,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
  * @method static Gender MALE
  * @method static Gender FEMALE
  */
-abstract class Gender extends Enum
+abstract class Gender extends ZEnum
 {
     /**
      * @var string

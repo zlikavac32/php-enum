@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Zlikavac32\Enum\Tests\Fixtures;
+namespace Zlikavac32\ZEnum\Tests\Fixtures;
 
-use Zlikavac32\Enum\Enum;
+use Zlikavac32\ZEnum\ZEnum;
 
 /**
  * @method static InvalidOverrideConstructorEnum ENUM_A
  */
-class InvalidOverrideConstructorEnum extends Enum
+class InvalidOverrideConstructorEnum extends ZEnum
 {
     public function __construct() { }
 

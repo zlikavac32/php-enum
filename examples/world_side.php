@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Zlikavac32\Enum\Examples;
+namespace Zlikavac32\ZEnum\Examples;
 
-use Zlikavac32\Enum\Enum;
+use Zlikavac32\ZEnum\ZEnum;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -18,7 +18,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
  * @method static WorldSide EAST
  * @method static WorldSide WEST
  */
-abstract class WorldSide extends Enum
+abstract class WorldSide extends ZEnum
 {
 
     protected static function enumerate(): array

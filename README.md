@@ -62,7 +62,7 @@ Every call to enum object guarantees to return same instance every time it is ca
 
 ## API
 
-Main class is `\Zlikavac32\Enum\Enum` which serves as base enum (I'd rather have `enum` keywords, but life isn't perfect). You have to extend it and provide list of static methods in the class PHPDoc comment. Check the [Usage](#usage) section to see a real example.
+Main class is `\Zlikavac32\ZEnum\ZEnum` which serves as base enum (I'd rather have `enum` keywords, but life isn't perfect). You have to extend it and provide list of static methods in the class PHPDoc comment. Check the [Usage](#usage) section to see a real example.
 
 This class also exposes few public static and non static methods which are listed bellow.
 
@@ -99,7 +99,7 @@ In `src/functions.php` are some helper function that could help you asserting ce
 
 ## Usage
 
-Create an abstract class that will represent your enum and let it extend `\Zlikavac32\Enum\Enum`. 
+Create an abstract class that will represent your enum and let it extend `\Zlikavac32\ZEnum\ZEnum`.
 
 You must list static methods in the class PHPDoc comment. Method names are used as enum names.
 
@@ -108,7 +108,7 @@ You must list static methods in the class PHPDoc comment. Method names are used 
  * @method static YesNo YES
  * @method static YesNo NO
  */
-abstract class YesNo extends \Zlikavac32\Enum\Enum
+abstract class YesNo extends \Zlikavac32\ZEnum\ZEnum
 {
 
 }
@@ -127,7 +127,7 @@ It's also possible to manually instantiate enum objects and return them as a map
  * @method static YesNo YES
  * @method static YesNo NO
  */
-abstract class YesNo extends \Zlikavac32\Enum\Enum
+abstract class YesNo extends \Zlikavac32\ZEnum\ZEnum
 {
     protected static function enumerate(): array
     {
@@ -145,7 +145,7 @@ Note that every enum name listed in the PHPDoc comment must exist as a key in th
 
 It would be nice if we'd get notified when we have an unhandled branch when new enum names are added. This is not available without a bit of manual work.
 
-A convenient `\Zlikavac32\Enum\UnhandledEnumException` is provided to make that manual work a bit easier. Easier in a sense that we get nice error message.
+A convenient `\Zlikavac32\ZEnum\UnhandledEnumException` is provided to make that manual work a bit easier. Easier in a sense that we get nice error message.
 
 It's intended to be thrown in the default case when checking every enum name.
 
@@ -162,7 +162,7 @@ switch ($enum) {
 
 ### More than one parent
 
-It is possible to have more than one class between defining enum class and `\Zlikavac32\Enum\Enum` class with a few restrictions (check [Restrictions regarding inheritance](#restrictions-regarding-inheritance)).
+It is possible to have more than one class between defining enum class and `\Zlikavac32\ZEnum\ZEnum` class with a few restrictions (check [Restrictions regarding inheritance](#restrictions-regarding-inheritance)).
 
 To see an example, open [examples/hashable_enum.php](examples/hashable_enum.php).
 
@@ -187,7 +187,7 @@ The reasoning behind this is the same as with serialisation.
 
 ### Reserved methods
 
-None of the public methods in `\Zlikavac32\Enum\Enum` can be used as an enum name. Check the [API](#api) section for more details.
+None of the public methods in `\Zlikavac32\ZEnum\ZEnum` can be used as an enum name. Check the [API](#api) section for more details.
 
 ## Limitations
 

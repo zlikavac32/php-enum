@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Zlikavac32\Enum\Tests\Fixtures;
+namespace Zlikavac32\ZEnum\Tests\Fixtures;
 
-use Zlikavac32\Enum\Enum;
+use Zlikavac32\ZEnum\ZEnum;
 
 /**
  * @method static WrongClassEnumerationObjectsEnum ALIAS
  */
-abstract class WrongClassEnumerationObjectsEnum extends Enum
+abstract class WrongClassEnumerationObjectsEnum extends ZEnum
 {
     protected static function enumerate(): array
     {
@@ -22,7 +22,7 @@ abstract class WrongClassEnumerationObjectsEnum extends Enum
 /**
  * @method static WrongClassEnumerationObjectsDummyEnum A
  */
-abstract class WrongClassEnumerationObjectsDummyEnum extends Enum
+abstract class WrongClassEnumerationObjectsDummyEnum extends ZEnum
 {
     protected static function enumerate(): array
     {

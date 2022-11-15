@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Zlikavac32\Enum\Examples;
+namespace Zlikavac32\ZEnum\Examples;
 
 use Ds\Hashable;
 use Ds\Set;
-use Zlikavac32\Enum\Enum;
+use Zlikavac32\ZEnum\ZEnum;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -23,7 +23,7 @@ if (
 /**
  * Example that show how to extend Enum with custom behaviour
  */
-abstract class HashableEnum extends Enum implements Hashable
+abstract class HashableEnum extends ZEnum implements Hashable
 {
 
     public function equals($object): bool

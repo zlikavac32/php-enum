@@ -1,5 +1,9 @@
 # PHP-Enum changelog
 
+## Unreleased
+
+* **[CHANGED]** Renamed namespace and class from `Enum` to `ZEnum` to allow PHP 8.1
+
 ## 4.0.0 (2021-04-12)
 
 * **[CHANGED]** Added support for PHP 8.0
